@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+  <head>
+    <title>CPU/GPU Widget</title>
+    <style>
+      body {
+        background: rgba(30, 30, 30, 0.8);
+        color: white;
+        font-family: sans-serif;
+        margin: 0;
+        padding: 10px;
+      }
+      #draggable-area {
+      width: 100%;
+      height: 30px;
+      /* background-color: #444; */
+      cursor: move;
+      position: absolute;
+    }
+    </style>
+  </head>
+  <body>
+    <!-- <div id="draggable-area"></div> -->
+    <h3>CPU Load: <span id="cpu-load">...</span>%</h3>
+    <h3>GPU: <span id="gpu-name">...</span></h3>
+    <script src="renderer.js"></script>
+  </body>
+</html>

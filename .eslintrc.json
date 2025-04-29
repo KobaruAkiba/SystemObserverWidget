@@ -1,0 +1,3 @@
+{
+  "extends": "@kobaru/eslint-prettier-config"
+}

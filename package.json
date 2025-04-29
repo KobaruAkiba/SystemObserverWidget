@@ -1,0 +1,31 @@
+{
+  "name": "systemobserverwidget",
+  "version": "0.0.1-alpha",
+  "main": "dist/main.js",
+  "scripts": {
+    "start": "bun run build && electron .",
+    "build": "bun run tsc && cp src/index.html dist/index.html"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "@types/node": "^22.15.3",
+    "@typescript-eslint/eslint-plugin": "^8.31.1",
+    "@typescript-eslint/parser": "^8.31.1",
+    "eslint": "^9.25.1",
+    "eslint-config-prettier": "^10.1.2",
+    "eslint-plugin-prettier": "^5.2.6",
+    "prettier": "^3.5.3"
+  },
+  "peerDependencies": {
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "@kobaru/eslint-prettier-config": "file:../eslint-prettier-config",
+    "electron": "^36.0.0",
+    "systeminformation": "^5.25.11"
+  },
+  "trustedDependencies": [
+    "electron",
+    "unrs-resolver"
+  ]
+}
