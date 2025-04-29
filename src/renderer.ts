@@ -1,5 +1,4 @@
 const updateStats = async () => {
-  const cpuLoad = document.getElementById("cpu-load");
   const gpuName = document.getElementById("gpu-name");
   
   if (!window.sysinfo) {
@@ -10,9 +9,14 @@ const updateStats = async () => {
 
   await window.sysinfo.getCPU()
     .then((cpuData) => {
-      if (cpuLoad) {
-        cpuLoad.textContent = cpuData.currentLoad.toFixed(1);
-      }})
+        const cpuCircle = document.getElementById('cpu-usage-circle') as HTMLElement;
+        const cpuText = document.getElementById('cpu-percentage') as HTMLElement;
+        // Set the border rotation based on the CPU usage percentage
+        const rotationDegree = (cpuData.currentLoad / 100) * 360;
+        cpuCircle.style.background = `conic-gradient(#4CAF50 ${rotationDegree}deg, #212121 ${rotationDegree}deg)`;
+        // Update the CPU percentage text
+        cpuText.textContent = `${cpuData.currentLoad.toFixed(1)}%`;
+      })
     .catch((error) => console.error("Error fetching CPU data:", error));
 
   await window.sysinfo.getGPU()

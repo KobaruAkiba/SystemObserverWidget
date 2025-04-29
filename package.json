@@ -4,7 +4,8 @@
   "main": "dist/main.js",
   "scripts": {
     "start": "bun run build && electron .",
-    "build": "bun run tsc && cp src/index.html dist/index.html"
+    "build": "bun run tsc",
+    "postbuild": "cp src/index.html dist/index.html && cp src/style.css dist/style.css"
   },
   "devDependencies": {
     "@types/bun": "latest",
