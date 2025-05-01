@@ -45,14 +45,6 @@ const updateStats = async () => {
 		.catch((error) => console.error('Error fetching current load data:', error));
 
 	await window.sysinfo
-		.getCpuTemperatureWindows()
-		.then((tempData) => {
-			console.log('temperature data:', tempData);
-			cpuTemperature.textContent = `${tempData}°C`;
-		})
-		.catch((error) => console.error('Error fetching CPU temperature data:', error));
-
-	await window.sysinfo
 		.getGpuMemory()
 		.then((gpuMemoryData) => {
 			if (gpuMemoryData) {

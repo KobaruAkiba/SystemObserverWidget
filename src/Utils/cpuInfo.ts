@@ -4,7 +4,7 @@ import { promisify } from 'util';
 const execAsync = promisify(exec);
 
 /**
- * Fallbacks to wmic to get CPU temperature on Windows
+ * [DEPRECATED: this is not exposed by windows] Fallbacks to wmic to get CPU temperature on Windows
  */
 export const getCpuTemperatureWindows = async (): Promise<number | null> => {
 	try {
