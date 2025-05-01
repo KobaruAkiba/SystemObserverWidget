@@ -4,12 +4,15 @@
 	"main": "dist/main.js",
 	"scripts": {
 		"start": "electron .",
-		"build": "bun build src/main.ts src/preload.ts src/renderer.ts --outdir=dist --target=bun",
+		"build": "bun build src/main.ts src/preload.ts src/renderer.ts --outdir=dist --target=node --format=cjs --minify",
+		"start-tsc": "bun run copy-all && bun run build-tsc && electron .",
 		"build-tsc": "bun run tsc",
+		"copy-all": "bun run copy-index && bun run copy-static",
 		"copy-index": "cp src/index.html dist/index.html",
 		"copy-static": "cpx \"static/**/*\" dist"
 	},
 	"devDependencies": {
+		"@kobaru/eslint-prettier-config": "file:../eslint-prettier-config",
 		"@types/bun": "latest",
 		"@types/node": "^22.15.3",
 		"@typescript-eslint/eslint-plugin": "^8.31.1",
@@ -18,8 +21,7 @@
 		"eslint": "^9.25.1",
 		"eslint-config-prettier": "^10.1.2",
 		"eslint-plugin-prettier": "^5.2.6",
-		"prettier": "^3.5.3",
-		"@kobaru/eslint-prettier-config": "file:../eslint-prettier-config"
+		"prettier": "^3.5.3"
 	},
 	"peerDependencies": {
 		"typescript": "^5.0.0"
