@@ -3,8 +3,10 @@ import { join } from 'path';
 
 const createWindow = () => {
 	const win = new BrowserWindow({
-		width: 300,
+		width: 420,
 		height: 200,
+		minWidth: 300,
+		minHeight: 200,
 		frame: false, // niente barra finestra = stile widget
 		transparent: true,
 		alwaysOnTop: true,
@@ -14,6 +16,7 @@ const createWindow = () => {
 		},
 	});
 
+	// Automatically opens dev tools if not packaged
 	if (!app.isPackaged) {
 		win.webContents.openDevTools();
 	}

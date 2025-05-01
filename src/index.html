@@ -1,19 +1,34 @@
 <!doctype html>
 <html>
-  <head>
-    <!-- <title>CPU/GPU Widget</title> -->
-    <link rel="stylesheet" href="style.css">
-  </head>
-  <body>
-    <!-- <div id="draggable-area"></div> -->
-    <!-- <h3>CPU Load: <span id="cpu-load">...</span>%</h3> -->
-      <div id="cpu-usage-container">
-        <div id="cpu-usage-background"></div>
-        <div id="cpu-usage-circle" class="circle"></div>
-        <div id="cpu-percentage">0%</div>
-      </div>
-     </div>
-    <h3>GPU: <span id="gpu-name">...</span></h3>
-    <script src="renderer.js"></script>
-  </body>
+	<head>
+		<title>CPU/GPU Widget</title>
+		<link
+			rel="stylesheet"
+			href="style.css"
+		/>
+	</head>
+	<body>
+		<div id="cpu-usage-container">
+			<div id="cpu-usage-icon">
+				<div
+					id="cpu-usage-circle"
+					class="circle"
+				></div>
+			</div>
+			<div id="cpu-usage-info">
+				<div id="cpu-usage-name">...</div>
+				<div id="cpu-usage-percentage">...%</div>
+				<div id="cpu-usage-temperature">...°C</div>
+			</div>
+		</div>
+		<div id="gpu-usage-container">
+			<div id="gpu-usage-icon"></div>
+			<div id="gpu-usage-info">
+				<div id="gpu-usage-name">...</div>
+				<div id="gpu-usage-percentage">...%</div>
+				<div id="gpu-usage-temperature">...°C</div>
+			</div>
+		</div>
+		<script src="renderer.js"></script>
+	</body>
 </html>
