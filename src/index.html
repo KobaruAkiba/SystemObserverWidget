@@ -1,15 +1,17 @@
 <!doctype html>
 <html>
   <head>
-    <title>CPU/GPU Widget</title>
+    <!-- <title>CPU/GPU Widget</title> -->
     <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <!-- <div id="draggable-area"></div> -->
     <!-- <h3>CPU Load: <span id="cpu-load">...</span>%</h3> -->
-     <div id="cpu-usage-container">
-      <div id="cpu-usage-circle" class="circle"></div>
-      <div id="cpu-percentage">0%</div>
+      <div id="cpu-usage-container">
+        <div id="cpu-usage-background"></div>
+        <div id="cpu-usage-circle" class="circle"></div>
+        <div id="cpu-percentage">0%</div>
+      </div>
      </div>
     <h3>GPU: <span id="gpu-name">...</span></h3>
     <script src="renderer.js"></script>

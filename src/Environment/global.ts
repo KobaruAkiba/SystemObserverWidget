@@ -1,10 +1,12 @@
-export {};
+import { Systeminformation } from 'systeminformation';
 
 declare global {
-  interface Window {
-    sysinfo: {
-      getCPU: () => Promise<{ currentLoad: number }>;
-      getGPU: () => Promise<{ controllers: { name?: string }[] }>;
-    };
-  }
+	interface Window {
+		sysinfo: {
+			getCPU: () => Promise<Systeminformation.CurrentLoadData>;
+			getGPU: () => Promise<Systeminformation.GraphicsData>;
+		};
+	}
 }
+
+export {};

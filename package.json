@@ -1,32 +1,35 @@
 {
-  "name": "systemobserverwidget",
-  "version": "0.0.1-alpha",
-  "main": "dist/main.js",
-  "scripts": {
-    "start": "bun run build && electron .",
-    "build": "bun run tsc",
-    "postbuild": "cp src/index.html dist/index.html && cp src/style.css dist/style.css"
-  },
-  "devDependencies": {
-    "@types/bun": "latest",
-    "@types/node": "^22.15.3",
-    "@typescript-eslint/eslint-plugin": "^8.31.1",
-    "@typescript-eslint/parser": "^8.31.1",
-    "eslint": "^9.25.1",
-    "eslint-config-prettier": "^10.1.2",
-    "eslint-plugin-prettier": "^5.2.6",
-    "prettier": "^3.5.3"
-  },
-  "peerDependencies": {
-    "typescript": "^5.0.0"
-  },
-  "dependencies": {
-    "@kobaru/eslint-prettier-config": "file:../eslint-prettier-config",
-    "electron": "^36.0.0",
-    "systeminformation": "^5.25.11"
-  },
-  "trustedDependencies": [
-    "electron",
-    "unrs-resolver"
-  ]
+	"name": "systemobserverwidget",
+	"version": "0.0.1-alpha",
+	"main": "dist/main.js",
+	"scripts": {
+		"start": "electron .",
+		"build": "bun build src/main.ts src/preload.ts src/renderer.ts --outdir=dist --target=bun",
+		"build-tsc": "bun run tsc",
+		"copy-index": "cp src/index.html dist/index.html",
+		"copy-static": "cpx \"static/**/*\" dist"
+	},
+	"devDependencies": {
+		"@types/bun": "latest",
+		"@types/node": "^22.15.3",
+		"@typescript-eslint/eslint-plugin": "^8.31.1",
+		"@typescript-eslint/parser": "^8.31.1",
+		"cpx": "^1.5.0",
+		"eslint": "^9.25.1",
+		"eslint-config-prettier": "^10.1.2",
+		"eslint-plugin-prettier": "^5.2.6",
+		"prettier": "^3.5.3",
+		"@kobaru/eslint-prettier-config": "file:../eslint-prettier-config"
+	},
+	"peerDependencies": {
+		"typescript": "^5.0.0"
+	},
+	"dependencies": {
+		"electron": "^36.0.0",
+		"systeminformation": "^5.25.11"
+	},
+	"trustedDependencies": [
+		"electron",
+		"unrs-resolver"
+	]
 }

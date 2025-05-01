@@ -1,1 +1,1 @@
-export * from "@kobaru/eslint-prettier-config/prettier";
+module.exports = require("@kobaru/eslint-prettier-config/prettier");

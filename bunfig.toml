@@ -1,0 +1,3 @@
+entrypoints = ["src/main.ts", "src/preload.ts", "src/renderer.ts"]
+outdir = "dist"
+target = "browser" # renderer
