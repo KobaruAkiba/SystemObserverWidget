@@ -8,25 +8,62 @@
 		/>
 	</head>
 	<body>
-		<div id="cpu-usage-container">
-			<div id="cpu-usage-icon">
+		<div>
+			<div
+				id="cpu-usage-container"
+				class="grid-container"
+			>
 				<div
-					id="cpu-usage-circle"
-					class="circle"
-				></div>
+					id="cpu-usage-icon"
+					class="grid-item"
+				>
+					<div
+						id="cpu-usage-circle"
+						class="circle"
+					></div>
+				</div>
+				<div
+					id="cpu-usage-info"
+					class="grid-item"
+				>
+					<div>[CPU]</div>
+					<div
+						id="cpu-usage-name"
+						class="text-ellipsis"
+					>
+						...
+					</div>
+					<div id="cpu-usage-percentage">...%</div>
+					<div id="cpu-usage-temperature">...°C</div>
+				</div>
 			</div>
-			<div id="cpu-usage-info">
-				<div id="cpu-usage-name">...</div>
-				<div id="cpu-usage-percentage">...%</div>
-				<div id="cpu-usage-temperature">...°C</div>
-			</div>
-		</div>
-		<div id="gpu-usage-container">
-			<div id="gpu-usage-icon"></div>
-			<div id="gpu-usage-info">
-				<div id="gpu-usage-name">...</div>
-				<div id="gpu-usage-percentage">...%</div>
-				<div id="gpu-usage-temperature">...°C</div>
+			<div
+				id="gpu-usage-container"
+				class="grid-container"
+			>
+				<div
+					id="gpu-usage-icon"
+					class="grid-item"
+				>
+					<div
+						id="gpu-usage-circle"
+						class="circle"
+					></div>
+				</div>
+				<div
+					id="gpu-usage-info"
+					class="grid-item"
+				>
+					<div>[GPU]</div>
+					<div
+						id="gpu-usage-name"
+						class="text-ellipsis"
+					>
+						...
+					</div>
+					<div id="gpu-usage-percentage">...%</div>
+					<div id="gpu-usage-temperature">...°C</div>
+				</div>
 			</div>
 		</div>
 		<script src="renderer.js"></script>

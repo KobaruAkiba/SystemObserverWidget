@@ -3,9 +3,9 @@ import { join } from 'path';
 
 const createWindow = () => {
 	const win = new BrowserWindow({
-		width: 420,
+		width: 350,
 		height: 200,
-		minWidth: 300,
+		minWidth: 350,
 		minHeight: 200,
 		frame: false, // niente barra finestra = stile widget
 		transparent: true,

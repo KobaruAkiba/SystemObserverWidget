@@ -1,49 +1,29 @@
+@import url('./css/animations.css');
+@import url('./css/gridStyle.css');
+@import url('./css/cpuStyle.css');
+@import url('./css/gpuStyle.css');
+
+:root {
+	--standard-margin: 8px;
+	--icon-responsive-size: clamp(60px, 25vh + 7vw, 120px);
+}
+
 body {
 	background: rgba(30, 30, 30, 0.6);
-	font-family: sans-serif;
+	font-family: monospace;
 	color: white;
+	font-size: clamp(14px, 2vw + 1vh, 24px);
 	margin: 0;
 	padding: 10px;
 }
 
-#cpu-usage-container {
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: row;
-}
-
-#cpu-usage-icon {
-	width: 32vh;
-	height: 32vh;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	background: url('images/cpu-container.png') no-repeat center center;
-	background-size: contain;
-}
-
-#cpu-usage-circle {
-	width: 85%;
-	height: 85%;
-	background: url('images/cpu-fan.png') no-repeat center center;
-	background-size: contain;
-	animation: spin 1s linear infinite;
-}
-
-#gpu-usage-container {
-	width: 100%;
-	height: auto;
-	display: flex;
-	flex-direction: row;
-}
-
-@keyframes spin {
-	0% {
-		transform: rotate(0deg);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
+.text-ellipsis {
+	max-width: 100%;
+	display: -webkit-box;
+	line-clamp: 1; /* number of lines you want to show */
+	-webkit-line-clamp: 1; /* number of lines you want to show */
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
 }
 
