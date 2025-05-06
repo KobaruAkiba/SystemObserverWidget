@@ -1,15 +1,26 @@
 import { contextBridge } from 'electron';
-import si from 'systeminformation';
-import { getGpuMemoryUsage, getGpuTemperature } from './Utils/gpuInfo';
-import { getCpuTemperatureWindows } from './Utils/cpuInfo';
+import { setCpuLoad, setCpuName, setCpuTemperature } from './Renderers/cpuRenderer';
+import { setGpuMemoryLoad, setGpuName, setGpuTemperature } from './Renderers/gpuRenderer';
 
-// Exposes the sysinfo API to the renderer process
-contextBridge.exposeInMainWorld('sysinfo', {
-	getCoreLoad: () => si.currentLoad(),
-	getCpu: () => si.cpu(),
-	getCpuTemperature: () => si.cpuTemperature(),
-	getCpuTemperatureWindows: () => getCpuTemperatureWindows(),
-	getGpu: () => si.graphics(),
-	getGpuMemory: () => getGpuMemoryUsage(),
-	getGpuTemperature: () => getGpuTemperature(),
+contextBridge.exposeInMainWorld('sow', {
+	cpu: {
+		setCpuName: (cpuNameElement: HTMLElement) => setCpuName(cpuNameElement),
+		setCpuLoad: (
+			cpuCircleIcon: HTMLElement,
+			cpuPercentageElement: HTMLElement,
+			cpuPercentageBarElement: HTMLElement
+		) => setCpuLoad(cpuCircleIcon, cpuPercentageElement, cpuPercentageBarElement),
+		setCpuTemperature: (cpuTemperatureElement: HTMLElement, cpuTemperatureBarElement: HTMLElement) =>
+			setCpuTemperature(cpuTemperatureElement, cpuTemperatureBarElement),
+	},
+	gpu: {
+		setGpuName: (gpuNameElement: HTMLElement) => setGpuName(gpuNameElement),
+		setGpuMemoryLoad: (
+			gpuCircleIcon: HTMLElement,
+			gpuPercentageElement: HTMLElement,
+			gpuPercentageBarElement: HTMLElement
+		) => setGpuMemoryLoad(gpuCircleIcon, gpuPercentageElement, gpuPercentageBarElement),
+		setGpuTemperature: (gpuTemperatureElement: HTMLElement, gpuTemperatureBarElement: HTMLElement) =>
+			setGpuTemperature(gpuTemperatureElement, gpuTemperatureBarElement),
+	},
 });
