@@ -1,6 +1,6 @@
 .grid-container {
 	display: grid;
-	grid-template-columns: 1fr 5fr 1fr; /* 3 columns: the second is 5 times wider */
+	grid-template-columns: 1fr 10fr 1fr; /* 3 columns: the second is 10 times wider */
 	gap: 16px; /* spacing between items */
 	margin: 8px auto; /* center the grid */
 }

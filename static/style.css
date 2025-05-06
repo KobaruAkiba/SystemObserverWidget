@@ -1,15 +1,18 @@
 @import url('./css/animations.css');
 @import url('./css/gridStyle.css');
+@import url('./css/fillingBarsStyle.css');
 @import url('./css/cpuStyle.css');
 @import url('./css/gpuStyle.css');
 
 :root {
 	--standard-margin: 8px;
 	--icon-responsive-size: clamp(60px, 25vh + 7vw, 120px);
+
+	--window-backgorund-color: rgba(30, 30, 30, 0.6);
 }
 
 body {
-	background: rgba(30, 30, 30, 0.6);
+	background: var(--window-backgorund-color);
 	font-family: monospace;
 	color: white;
 	font-size: clamp(14px, 2vw + 1vh, 24px);

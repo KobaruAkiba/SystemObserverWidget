@@ -1,11 +1,33 @@
 // ! This file should be a bloated one: importing modules from other files will not work or will require to change compile options only for this file
 const cpuCircle = document.getElementById('cpu-usage-circle') as HTMLElement;
 const cpuName = document.getElementById('cpu-usage-name') as HTMLElement;
-const cpuPercentage = document.getElementById('cpu-usage-percentage') as HTMLElement;
-const cpuTemperature = document.getElementById('cpu-usage-temperature') as HTMLElement;
+const cpuPercentage = document.getElementById('cpu-numbers-percentage') as HTMLElement;
+const cpuPercentageBar = document.getElementById('cpu-usage-percentage-bar') as HTMLElement;
+const cpuTemperature = document.getElementById('cpu-numbers-temperature') as HTMLElement;
+const cpuTemperatureBar = document.getElementById('cpu-usage-temperature-bar') as HTMLElement;
+const gpuCircle = document.getElementById('gpu-usage-circle') as HTMLElement;
 const gpuName = document.getElementById('gpu-usage-name') as HTMLElement;
-const gpuPercentage = document.getElementById('gpu-usage-percentage') as HTMLElement;
-const gpuTemperature = document.getElementById('gpu-usage-temperature') as HTMLElement;
+const gpuPercentage = document.getElementById('gpu-numbers-percentage') as HTMLElement;
+const gpuPercentageBar = document.getElementById('gpu-usage-percentage-bar') as HTMLElement;
+const gpuTemperature = document.getElementById('gpu-numbers-temperature') as HTMLElement;
+const gpuTemperatureBar = document.getElementById('gpu-usage-temperature-bar') as HTMLElement;
+
+// Function to calculate the animation duration based on the percentage of load
+const calculateAnimationDuration = (percentage: number) =>
+	Math.max(0.2, 1 - (percentage / 100) * (1 - 0.2));
+
+// Function to calculate the color based on the percentage of load
+const calculateUsageColor = (percentage: number): string => {
+	if (percentage < 40) {
+		return 'green';
+	} else if (percentage < 75) {
+		return 'yellow';
+	} else if (percentage < 90) {
+		return 'orange';
+	} else {
+		return 'red';
+	}
+};
 
 /**
  * Gets the cpu name and sets it to the cpuName element.
@@ -14,7 +36,6 @@ const setCpuName = async () =>
 	await window.sysinfo
 		.getCpu()
 		.then((cpuData) => {
-			console.log('cpu data:', cpuData);
 			cpuName.textContent = cpuData.manufacturer + ' ' + cpuData.brand;
 		})
 		.catch((error) => console.error('Error fetching CPU data:', error));
@@ -27,17 +48,21 @@ const setCpuLoad = async () =>
 	await window.sysinfo
 		.getCoreLoad()
 		.then((cpuData) => {
-			console.log('cpu data:', cpuData);
-			const animationDuration = Math.max(0.2, 1 - (cpuData.currentLoad / 100) * (1 - 0.2)); // Calcola la durata dell'animazione in base al carico della CPU
-			cpuCircle.style.animationDuration = `${animationDuration}s`;
+			cpuCircle.style.animationDuration = `${calculateAnimationDuration(cpuData.currentLoad)}s`;
 			cpuPercentage.textContent = `${cpuData.currentLoad.toFixed(1)}%`;
+			cpuPercentageBar.style.width = `${cpuData.currentLoad}%`;
+			cpuPercentageBar.style.backgroundColor = calculateUsageColor(cpuData.currentLoad);
 		})
 		.catch((error) => console.error('Error fetching current load data:', error));
 
 /**
  * Sets the cpu temperature to the cpuTemperature element.
  */
-const setCpuTemperature = () => (cpuTemperature.textContent = 'N/A °C'); // TODO: implementare il recupero della temperatura della CPU
+const setCpuTemperature = () => {
+	// TODO: implementare il recupero della temperatura della CPU
+	cpuTemperature.textContent = 'N/A °C';
+	cpuTemperatureBar.style.width = '0%';
+};
 
 /**
  * Gets the gpu name and sets it to the gpuName element.
@@ -46,26 +71,48 @@ const setGpuName = async () =>
 	await window.sysinfo
 		.getGpu()
 		.then((gpuData) => {
-			console.log('gpu data:', gpuData);
 			gpuName.textContent = gpuData.controllers[0].model;
 		})
 		.catch((error) => console.error('Error fetching GPU data:', error));
 
+/**
+ * Sets the gpu load to the gpuPercentage element and sets the animation duration of the gpuCircle element.
+ */
 const setGpuMemoryLoad = async () =>
 	await window.sysinfo
 		.getGpuMemory()
 		.then((gpuMemoryData) => {
-			gpuPercentage.textContent = gpuMemoryData
-				? `${((gpuMemoryData.used / gpuMemoryData.total) * 100).toFixed(1)}%`
-				: 'N/A';
+			if (!gpuMemoryData) {
+				gpuPercentage.textContent = 'N/A';
+				gpuPercentageBar.style.width = '0%';
+				return;
+			}
+
+			const percentage = (gpuMemoryData.used / gpuMemoryData.total) * 100;
+			gpuCircle.style.animationDuration = `${calculateAnimationDuration(percentage)}s`;
+			gpuPercentage.textContent = `${percentage.toFixed(1)}%`;
+			gpuPercentageBar.style.width = `${percentage}%`;
+			gpuPercentageBar.style.backgroundColor = calculateUsageColor(percentage);
 		})
 		.catch((error) => console.error('Error fetching GPU memory data:', error));
 
+/**
+ * Sets the gpu temperature to the gpuTemperature element.
+ */
 const setGpuTemperature = async () =>
 	await window.sysinfo
 		.getGpuTemperature()
 		.then((tempData) => {
-			gpuTemperature.textContent = tempData ? `${tempData}°C` : 'N/A';
+			if (!tempData) {
+				gpuTemperature.textContent = 'N/A';
+				gpuTemperatureBar.style.width = `0%`;
+				return;
+			}
+
+			const temperaturePercentage = (tempData / 82) * 100; // Assuming 82°C is the max temperature
+			gpuTemperature.textContent = `${tempData}°C`;
+			gpuTemperatureBar.style.width = `${temperaturePercentage}%`;
+			gpuTemperatureBar.style.backgroundColor = calculateUsageColor(temperaturePercentage);
 		})
 		.catch((error) => console.error('Error fetching GPU temperature data:', error));
 
