@@ -1,4 +1,7 @@
+@import url('./css/scrollbar.css');
+@import url('./css/header.css');
 @import url('./css/animations.css');
+@import url('./css/icons.css');
 @import url('./css/gridStyle.css');
 @import url('./css/fillingBarsStyle.css');
 @import url('./css/cpuStyle.css');
@@ -8,16 +11,38 @@
 	--standard-margin: 8px;
 	--icon-responsive-size: clamp(60px, 25vh + 7vw, 120px);
 
-	--window-backgorund-color: rgba(30, 30, 30, 0.6);
+	--window-backgorund-color: #1e1e1eee;
 }
 
+html,
 body {
-	background: var(--window-backgorund-color);
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: rgba(0, 0, 0, 0) !important;
+	-webkit-app-region: no-drag;
+}
+
+.scroll-container::-webkit-scrollbar {
+	width: 4px;
+}
+
+.window {
 	font-family: monospace;
 	color: white;
 	font-size: clamp(14px, 2vw + 1vh, 24px);
-	margin: 0;
+	background: var(--window-backgorund-color);
+	border-radius: 10px;
 	padding: 10px;
+	overflow: hidden;
+}
+
+.content {
+	margin-top: 5vh; /* 5vh (fake header height) */
+	overflow: auto;
+	height: 95vh; /* 100vh - 5vh (fake header height) */
 }
 
 .text-ellipsis {

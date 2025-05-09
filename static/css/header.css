@@ -1,0 +1,47 @@
+.window-controls {
+	display: flex;
+	width: 100%;
+	height: 5vh;
+	user-select: none;
+	position: fixed;
+	justify-content: center;
+	align-items: center;
+	top: 0;
+	left: 0;
+}
+
+.widget-move-bar {
+	-webkit-app-region: drag;
+	width: 84%;
+	height: 10px;
+	border-radius: 100px;
+	z-index: 10;
+	background: #333;
+	color: white;
+	margin-top: 10px;
+}
+
+.window-buttons {
+	-webkit-app-region: no-drag;
+	height: 100%;
+	width: 40px;
+	position: absolute;
+	top: 0;
+	right: 0;
+	display: flex;
+	justify-content: flex-end;
+	padding: 0 8px;
+}
+
+.window-button {
+	border-radius: 100px;
+	background: none;
+	color: white;
+	border: thin;
+	position: fixed;
+}
+
+.window-button:hover {
+	background: rgba(255, 255, 255, 0.1);
+}
+
