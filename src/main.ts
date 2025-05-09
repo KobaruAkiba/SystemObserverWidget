@@ -1,5 +1,6 @@
-import { app, BrowserWindow } from 'electron';
+import { app, BrowserWindow, ipcMain } from 'electron';
 import { join } from 'path';
+import { ipcEvents } from './Utils/events';
 
 const createWindow = () => {
 	const win = new BrowserWindow({
@@ -9,10 +10,13 @@ const createWindow = () => {
 		minHeight: 200,
 		frame: false, // niente barra finestra = stile widget
 		transparent: true,
+		hasShadow: true,
+		roundedCorners: true,
 		alwaysOnTop: true,
 		webPreferences: {
 			preload: join(__dirname, 'preload.js'),
 			nodeIntegration: true,
+			backgroundThrottling: false,
 		},
 	});
 
@@ -23,5 +27,25 @@ const createWindow = () => {
 
 	win.loadFile(join(__dirname, 'index.html'));
 };
+
+// Registers to the minimize event. Will minimize the window when the event is triggered.
+ipcMain.on(ipcEvents.minimize, () => {
+	const win = BrowserWindow.getFocusedWindow();
+	if (win) {
+		win.minimize();
+	}
+});
+
+// Registers to the forceFocus event. Will focus the window when the event is triggered.
+ipcMain.on(ipcEvents.forceFocus, () => {
+	const focusedWindow = BrowserWindow.getFocusedWindow();
+	if (focusedWindow) {
+		console.log('Focusing window');
+		focusedWindow.focus();
+		const winSize = focusedWindow?.getSize();
+		console.log('Window size:', winSize);
+		focusedWindow.setSize(winSize[0], winSize[1]);
+	}
+});
 
 app.whenReady().then(createWindow);

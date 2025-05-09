@@ -1,139 +1,184 @@
 <!doctype html>
 <html>
 	<head>
-		<title>CPU/GPU Widget</title>
+		<meta
+			http-equiv="Content-Security-Policy"
+			content="default-src 'self'; style-src 'self' 'unsafe-inline';"
+		/>
+		<!-- <title>CPU/GPU Widget</title> -->
 		<link
 			rel="stylesheet"
 			href="style.css"
 		/>
 	</head>
 	<body>
-		<div>
-			<div
-				id="cpu-usage-container"
-				class="grid-container"
-			>
-				<div
-					id="cpu-usage-icon"
-					class="grid-item"
-				>
-					<div
-						id="cpu-usage-circle"
-						class="circle"
-					></div>
-				</div>
-				<div
-					id="cpu-usage-info"
-					class="grid-item"
-				>
-					<div>[CPU]</div>
-					<div
-						id="cpu-usage-name"
-						class="text-ellipsis"
+		<div class="window">
+			<div class="window-controls">
+				<div class="widget-move-bar"></div>
+				<span class="window-buttons">
+					<button
+						id="minimize-button"
+						class="window-button"
 					>
-						...
-					</div>
-					<div class="filling-bar-container">
-						[
-						<span class="filling-bar-wrapper">
-							<span
-								id="cpu-usage-percentage-bar"
-								class="filling-bar"
-							>
-								<span class="filling-line-trashold trashold-40"></span>
-								<span class="filling-line-trashold trashold-75"></span>
-								<span class="filling-line-trashold trashold-90"></span>
-							</span>
-						</span>
-						<span
-							id="cpu-numbers-percentage"
-							class="filling-bar-usage-number"
-							>...%</span
-						>
-						]
-					</div>
-					<div class="filling-bar-container">
-						[
-						<span class="filling-bar-wrapper">
-							<span
-								id="cpu-usage-temperature-bar"
-								class="filling-bar"
-							>
-								<span class="filling-line-trashold trashold-40"></span>
-								<span class="filling-line-trashold trashold-75"></span>
-								<span class="filling-line-trashold trashold-90"></span>
-							</span>
-						</span>
-						<span
-							id="cpu-numbers-temperature"
-							class="filling-bar-usage-number"
-							>...°C</span
-						>
-						]
-					</div>
-				</div>
+						_
+					</button>
+				</span>
 			</div>
-			<div
-				id="gpu-usage-container"
-				class="grid-container"
-			>
+			<div class="content">
 				<div
-					id="gpu-usage-icon"
-					class="grid-item"
+					id="cpu-usage-container"
+					class="grid-container"
 				>
 					<div
-						id="gpu-usage-circle"
-						class="circle"
-					></div>
+						id="cpu-usage-icon"
+						class="background-icon grid-item"
+					>
+						<div
+							id="cpu-usage-circle"
+							class="circle spinning-icon"
+						></div>
+					</div>
+					<div
+						id="cpu-usage-info"
+						class="grid-item"
+					>
+						<div>[CPU]</div>
+						<div
+							id="cpu-usage-name"
+							class="text-ellipsis"
+						>
+							...
+						</div>
+						<div class="filling-bar-container">
+							[
+							<span class="filling-bar-wrapper">
+								<span
+									id="cpu-usage-percentage-bar"
+									class="filling-bar"
+								>
+									<span class="filling-line-trashold trashold-40"></span>
+									<span class="filling-line-trashold trashold-75"></span>
+									<span class="filling-line-trashold trashold-90"></span>
+								</span>
+							</span>
+							<span
+								id="cpu-numbers-percentage"
+								class="filling-bar-usage-number"
+								>...%</span
+							>
+							]
+						</div>
+						<div class="filling-bar-container">
+							[
+							<span class="filling-bar-wrapper">
+								<span
+									id="cpu-usage-temperature-bar"
+									class="filling-bar"
+								>
+									<span class="filling-line-trashold trashold-40"></span>
+									<span class="filling-line-trashold trashold-75"></span>
+									<span class="filling-line-trashold trashold-90"></span>
+								</span>
+							</span>
+							<span
+								id="cpu-numbers-temperature"
+								class="filling-bar-usage-number"
+								>...°C</span
+							>
+							]
+						</div>
+					</div>
 				</div>
 				<div
-					id="gpu-usage-info"
-					class="grid-item"
+					id="gpu-usage-container"
+					class="grid-container"
 				>
-					<div>[GPU]</div>
 					<div
-						id="gpu-usage-name"
-						class="text-ellipsis"
+						id="gpu-usage-icon"
+						class="background-icon grid-item"
 					>
-						...
+						<div
+							id="gpu-usage-circle"
+							class="circle spinning-icon"
+						></div>
 					</div>
-					<div class="filling-bar-container">
-						[
-						<span class="filling-bar-wrapper">
-							<span
-								id="gpu-usage-percentage-bar"
-								class="filling-bar"
-							>
-								<span class="filling-line-trashold trashold-40"></span>
-								<span class="filling-line-trashold trashold-75"></span>
-								<span class="filling-line-trashold trashold-90"></span>
-							</span>
-						</span>
-						<span
-							id="gpu-numbers-percentage"
-							class="filling-bar-usage-number"
-							>...%</span
+					<div
+						id="gpu-usage-info"
+						class="grid-item"
+					>
+						<div>[GPU]</div>
+						<div
+							id="gpu-usage-name"
+							class="text-ellipsis"
 						>
-						]
+							...
+						</div>
+						<div class="filling-bar-container">
+							[
+							<span class="filling-bar-wrapper">
+								<span
+									id="gpu-usage-percentage-bar"
+									class="filling-bar"
+								>
+									<span class="filling-line-trashold trashold-40"></span>
+									<span class="filling-line-trashold trashold-75"></span>
+									<span class="filling-line-trashold trashold-90"></span>
+								</span>
+							</span>
+							<span
+								id="gpu-numbers-percentage"
+								class="filling-bar-usage-number"
+								>...%</span
+							>
+							]
+						</div>
+						<div class="filling-bar-container">
+							[
+							<span class="filling-bar-wrapper">
+								<span
+									id="gpu-usage-temperature-bar"
+									class="filling-bar"
+								>
+									<span class="filling-line-trashold trashold-40"></span>
+									<span class="filling-line-trashold trashold-75"></span>
+									<span class="filling-line-trashold trashold-90"></span>
+								</span>
+							</span>
+							<span
+								id="gpu-numbers-temperature"
+								class="filling-bar-usage-number"
+								>...°C</span
+							>
+							]
+						</div>
 					</div>
-					<div class="filling-bar-container">
-						[
-						<span class="filling-bar-wrapper">
-							<span
-								id="gpu-usage-temperature-bar"
-								class="filling-bar"
-							>
-								<span class="filling-line-trashold trashold-40"></span>
-								<span class="filling-line-trashold trashold-75"></span>
-								<span class="filling-line-trashold trashold-90"></span>
-							</span>
-						</span>
-						<span
-							id="gpu-numbers-temperature"
-							class="filling-bar-usage-number"
-							>...°C</span
-						>
-						]
+				</div>
+				<div
+					id="motherboard-container"
+					class="grid-container"
+				>
+					<div
+						id="motherboard-icon"
+						class="background-icon grid-item"
+					></div>
+					<div class="grid-item">
+						<div>[MotherBoard]</div>
+						<div id="motherboard-manufacturer">...</div>
+						<div id="motherboard-model">...</div>
+					</div>
+				</div>
+				<div
+					id="os-container"
+					class="grid-container"
+				>
+					<div
+						id="os-icon"
+						class="background-icon grid-item"
+					></div>
+					<div class="grid-item">
+						<div>[OS]</div>
+						<div id="os-distro">...</div>
+						<div id="os-arch">...</div>
 					</div>
 				</div>
 			</div>

@@ -1,6 +1,3 @@
-import { IGpuMemoryUsage } from 'src/Utils/gpuInfo';
-import { Systeminformation } from 'systeminformation';
-
 declare global {
 	interface Window {
 		sow: {
@@ -28,6 +25,13 @@ declare global {
 					gpuTemperatureBarElement: HTMLElement
 				) => Promise<void>;
 			};
+			setMotherBoardInfo: (
+				mbManufacturerElement: HTMLElement,
+				mbModelElement: HTMLElement
+			) => Promise<void>;
+			setOsInfo: (osDistroElement: HTMLElement, osArchElement: HTMLElement) => Promise<void>;
+			minimize: () => void;
+			forceFocus: () => void;
 		};
 	}
 }

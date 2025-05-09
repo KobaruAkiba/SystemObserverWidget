@@ -1,6 +1,8 @@
-import { contextBridge } from 'electron';
+import { contextBridge, ipcRenderer } from 'electron';
 import { setCpuLoad, setCpuName, setCpuTemperature } from './Renderers/cpuRenderer';
 import { setGpuMemoryLoad, setGpuName, setGpuTemperature } from './Renderers/gpuRenderer';
+import { ipcEvents } from './Utils/events';
+import { setMotherBoardInfo, setOsInfo } from './Renderers/extraRenderers';
 
 contextBridge.exposeInMainWorld('sow', {
 	cpu: {
@@ -23,4 +25,10 @@ contextBridge.exposeInMainWorld('sow', {
 		setGpuTemperature: (gpuTemperatureElement: HTMLElement, gpuTemperatureBarElement: HTMLElement) =>
 			setGpuTemperature(gpuTemperatureElement, gpuTemperatureBarElement),
 	},
+	setMotherBoardInfo: (mbManufacturerElement: HTMLElement, mbModelElement: HTMLElement) =>
+		setMotherBoardInfo(mbManufacturerElement, mbModelElement),
+	setOsInfo: (osDistroElement: HTMLElement, osArchElement: HTMLElement) =>
+		setOsInfo(osDistroElement, osArchElement),
+	minimize: () => ipcRenderer.send(ipcEvents.minimize),
+	forceFocus: () => ipcRenderer.send(ipcEvents.forceFocus),
 });

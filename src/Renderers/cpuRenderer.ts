@@ -47,4 +47,3 @@ export const setCpuTemperature = (
 	cpuTemperatureElement.textContent = 'N/A °C';
 	cpuTemperatureBarElement.style.width = '0%';
 };
-
