@@ -43,3 +43,8 @@
 	background-size: contain;
 }
 
+#ram-icon {
+	background: url('../images/ram-icon.png') no-repeat center center;
+	background-size: contain;
+}
+

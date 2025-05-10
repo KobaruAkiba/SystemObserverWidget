@@ -25,13 +25,22 @@ declare global {
 					gpuTemperatureBarElement: HTMLElement
 				) => Promise<void>;
 			};
-			setMotherBoardInfo: (
-				mbManufacturerElement: HTMLElement,
-				mbModelElement: HTMLElement
-			) => Promise<void>;
+			mb: {
+				setMotherBoardName: (
+					mbManufacturerElement: HTMLElement,
+					mbModelElement: HTMLElement
+				) => Promise<void>;
+				setMotherBoardBiosVersion: (mbBiosElement: HTMLElement) => Promise<void>;
+			};
+			ram: {
+				setMemoryLoad: (
+					ramPercentageElement: HTMLElement,
+					ramPercentageBarElement: HTMLElement
+				) => Promise<void>;
+				setMemoryBanks: (ramBanksElement: HTMLElement) => Promise<void>;
+			};
 			setOsInfo: (osDistroElement: HTMLElement, osArchElement: HTMLElement) => Promise<void>;
 			minimize: () => void;
-			forceFocus: () => void;
 		};
 	}
 }

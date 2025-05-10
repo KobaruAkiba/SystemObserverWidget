@@ -20,7 +20,7 @@
 						id="minimize-button"
 						class="window-button"
 					>
-						_
+						-
 					</button>
 				</span>
 			</div>
@@ -154,6 +154,43 @@
 					</div>
 				</div>
 				<div
+					id="ram-container"
+					class="grid-container"
+				>
+					<div
+						id="ram-icon"
+						class="background-icon grid-item"
+					></div>
+					<div class="grid-item">
+						<div>[RAM]</div>
+						<div
+							id="ram-banks"
+							class="text-ellipsis"
+						>
+							...
+						</div>
+						<div class="filling-bar-container">
+							[
+							<span class="filling-bar-wrapper">
+								<span
+									id="ram-usage-percentage-bar"
+									class="filling-bar"
+								>
+									<span class="filling-line-trashold trashold-40"></span>
+									<span class="filling-line-trashold trashold-75"></span>
+									<span class="filling-line-trashold trashold-90"></span>
+								</span>
+							</span>
+							<span
+								id="ram-numbers-percentage"
+								class="filling-bar-usage-number"
+								>...%</span
+							>
+							]
+						</div>
+					</div>
+				</div>
+				<div
 					id="motherboard-container"
 					class="grid-container"
 				>
@@ -163,8 +200,24 @@
 					></div>
 					<div class="grid-item">
 						<div>[MotherBoard]</div>
-						<div id="motherboard-manufacturer">...</div>
-						<div id="motherboard-model">...</div>
+						<div
+							id="motherboard-manufacturer"
+							class="text-ellipsis"
+						>
+							...
+						</div>
+						<div
+							id="motherboard-model"
+							class="text-ellipsis"
+						>
+							...
+						</div>
+						<div
+							id="motherboard-bios"
+							class="text-ellipsis"
+						>
+							...
+						</div>
 					</div>
 				</div>
 				<div
@@ -177,8 +230,18 @@
 					></div>
 					<div class="grid-item">
 						<div>[OS]</div>
-						<div id="os-distro">...</div>
-						<div id="os-arch">...</div>
+						<div
+							id="os-distro"
+							class="text-ellipsis"
+						>
+							...
+						</div>
+						<div
+							id="os-arch"
+							class="text-ellipsis"
+						>
+							...
+						</div>
 					</div>
 				</div>
 			</div>

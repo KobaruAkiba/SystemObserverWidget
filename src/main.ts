@@ -36,16 +36,4 @@ ipcMain.on(ipcEvents.minimize, () => {
 	}
 });
 
-// Registers to the forceFocus event. Will focus the window when the event is triggered.
-ipcMain.on(ipcEvents.forceFocus, () => {
-	const focusedWindow = BrowserWindow.getFocusedWindow();
-	if (focusedWindow) {
-		console.log('Focusing window');
-		focusedWindow.focus();
-		const winSize = focusedWindow?.getSize();
-		console.log('Window size:', winSize);
-		focusedWindow.setSize(winSize[0], winSize[1]);
-	}
-});
-
 app.whenReady().then(createWindow);

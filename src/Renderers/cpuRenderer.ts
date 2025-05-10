@@ -1,7 +1,7 @@
 import si from 'systeminformation';
 import {
 	calculateAnimationDurationFromPercentage,
-	calculateUsageColorFromPercentage,
+	calculateColorFromPercentage,
 } from '../Utils/styling';
 
 /**
@@ -11,7 +11,7 @@ export const setCpuName = async (cpuNameElement: HTMLElement) =>
 	await si
 		.cpu()
 		.then((cpuData) => {
-			cpuNameElement.textContent = cpuData.manufacturer + ' ' + cpuData.brand;
+			cpuNameElement.textContent = cpuData.manufacturer + ' ' + cpuData.brand || 'N/A';
 		})
 		.catch((error) => console.error('Error fetching CPU data:', error));
 
@@ -27,10 +27,16 @@ export const setCpuLoad = async (
 	await si
 		.currentLoad()
 		.then((cpuData) => {
+			if (!cpuData) {
+				cpuPercentageElement.textContent = 'N/A';
+				cpuPercentageBarElement.style.width = '0%';
+				return;
+			}
+
 			cpuCircleIcon.style.animationDuration = `${calculateAnimationDurationFromPercentage(cpuData.currentLoad)}s`;
 			cpuPercentageElement.textContent = `${cpuData.currentLoad.toFixed(1)}%`;
 			cpuPercentageBarElement.style.width = `${cpuData.currentLoad}%`;
-			cpuPercentageBarElement.style.backgroundColor = calculateUsageColorFromPercentage(
+			cpuPercentageBarElement.style.backgroundColor = calculateColorFromPercentage(
 				cpuData.currentLoad
 			);
 		})

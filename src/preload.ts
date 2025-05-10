@@ -1,8 +1,10 @@
 import { contextBridge, ipcRenderer } from 'electron';
+import { ipcEvents } from './Utils/events';
 import { setCpuLoad, setCpuName, setCpuTemperature } from './Renderers/cpuRenderer';
 import { setGpuMemoryLoad, setGpuName, setGpuTemperature } from './Renderers/gpuRenderer';
-import { ipcEvents } from './Utils/events';
-import { setMotherBoardInfo, setOsInfo } from './Renderers/extraRenderers';
+import { setOsInfo } from './Renderers/extraRenderers';
+import { setMotherBoardBiosVersion, setMotherBoardName } from './Renderers/motherboardRenderer';
+import { setMemoryBanks, setMemoryLoad } from './Renderers/ramRenderer';
 
 contextBridge.exposeInMainWorld('sow', {
 	cpu: {
@@ -25,10 +27,18 @@ contextBridge.exposeInMainWorld('sow', {
 		setGpuTemperature: (gpuTemperatureElement: HTMLElement, gpuTemperatureBarElement: HTMLElement) =>
 			setGpuTemperature(gpuTemperatureElement, gpuTemperatureBarElement),
 	},
-	setMotherBoardInfo: (mbManufacturerElement: HTMLElement, mbModelElement: HTMLElement) =>
-		setMotherBoardInfo(mbManufacturerElement, mbModelElement),
+	mb: {
+		setMotherBoardName: (mbManufacturerElement: HTMLElement, mbModelElement: HTMLElement) =>
+			setMotherBoardName(mbManufacturerElement, mbModelElement),
+		setMotherBoardBiosVersion: (mbBiosElement: HTMLElement) =>
+			setMotherBoardBiosVersion(mbBiosElement),
+	},
+	ram: {
+		setMemoryLoad: (ramPercentageElement: HTMLElement, ramPercentageBarElement: HTMLElement) =>
+			setMemoryLoad(ramPercentageElement, ramPercentageBarElement),
+		setMemoryBanks: (ramBanksElement: HTMLElement) => setMemoryBanks(ramBanksElement),
+	},
 	setOsInfo: (osDistroElement: HTMLElement, osArchElement: HTMLElement) =>
 		setOsInfo(osDistroElement, osArchElement),
 	minimize: () => ipcRenderer.send(ipcEvents.minimize),
-	forceFocus: () => ipcRenderer.send(ipcEvents.forceFocus),
 });

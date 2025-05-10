@@ -1,9 +1,17 @@
-// Function to calculate the animation duration based on the percentage of load
+/**
+ * Calculates the animation duration based on the percentage.
+ * @param percentage Percentage to calculate the animation duration from.
+ * @returns Seconds for the animation duration.
+ */
 export const calculateAnimationDurationFromPercentage = (percentage: number) =>
 	Math.max(0.2, 1 - (percentage / 100) * (1 - 0.2));
 
-// Function to calculate the color based on the percentage of load
-export const calculateUsageColorFromPercentage = (percentage: number): string => {
+/**
+ * Calculates the color based on the percentage.
+ * @param percentage Percentage to calculate the color from.
+ * @returns Css color string.
+ */
+export const calculateColorFromPercentage = (percentage: number): string => {
 	if (percentage < 40) {
 		return 'green';
 	} else if (percentage < 75) {

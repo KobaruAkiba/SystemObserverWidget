@@ -1,23 +1,18 @@
 import si from 'systeminformation';
 
-export const setMotherBoardInfo = async (
-	mbManufacturerElement: HTMLElement,
-	mbModelElement: HTMLElement
-) =>
-	si
-		.baseboard()
-		.then((data) => {
-			mbManufacturerElement.textContent = data.manufacturer;
-			mbModelElement.textContent = data.model;
-		})
-		.catch((error) => console.error('Error fetching baseboard info:', error));
-
+/**
+ * Sets the OS information (distro and architecture) to the provided elements.
+ */
 export const setOsInfo = async (osDistroElement: HTMLElement, osArchElement: HTMLElement) =>
 	si
 		.osInfo()
 		.then((data) => {
-			osDistroElement.textContent = data.distro;
-			osArchElement.textContent = data.arch;
+			osDistroElement.textContent = data.distro || 'N/A';
+			osArchElement.textContent = data.arch || 'N/A';
 		})
 		.catch((error) => console.error('Error fetching OS info:', error));
+
+si.getAllData().then((data) => {
+	console.log('System Information:', data);
+});
 
