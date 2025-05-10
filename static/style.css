@@ -4,8 +4,6 @@
 @import url('./css/icons.css');
 @import url('./css/gridStyle.css');
 @import url('./css/fillingBarsStyle.css');
-@import url('./css/cpuStyle.css');
-@import url('./css/gpuStyle.css');
 
 :root {
 	--standard-margin: 8px;
