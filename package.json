@@ -7,7 +7,7 @@
 	},
 	"version": "0.0.1-alpha",
 	"main": "dist/main.js",
-	"type": "commonjs",
+	"type": "module",
 	"scripts": {
 		"start": "electron-forge start",
 		"make": "electron-forge make",
@@ -50,4 +50,3 @@
 		"unrs-resolver"
 	]
 }
-

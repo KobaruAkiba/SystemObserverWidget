@@ -12,12 +12,13 @@
 		"allowJs": true,
 		"resolveJsonModule": true,
 		"experimentalDecorators": true,
-		"emitDecoratorMetadata": true,
+		"useDefineForClassFields": false,
 		"baseUrl": ".",
 		"paths": {
-			"@kobaru/eslint-prettier-config": ["node_modules/@kobaru/eslint-prettier-config"]
+			"@kobaru/eslint-prettier-config": ["node_modules/@kobaru/eslint-prettier-config"],
+			"@styles/*": ["static/*"]
 		}
 	},
 	"include": ["src/**/*"],
-	"exclude": ["node_modules", "src/renderer.ts", "src/Components/**/*"]
+	"exclude": ["node_modules"]
 }

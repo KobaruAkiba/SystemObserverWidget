@@ -1,13 +1,5 @@
-// * Use preload script to expose complex logic to the renderer process
-// ! Avoid using import statements in the renderer process
 const minimizeButton = document.getElementById('minimize-button') as HTMLElement;
 
-const cpuCircle = document.getElementById('cpu-usage-circle') as HTMLElement;
-const cpuName = document.getElementById('cpu-usage-name') as HTMLElement;
-const cpuPercentage = document.getElementById('cpu-numbers-percentage') as HTMLElement;
-const cpuPercentageBar = document.getElementById('cpu-usage-percentage-bar') as HTMLElement;
-const cpuTemperature = document.getElementById('cpu-numbers-temperature') as HTMLElement;
-const cpuTemperatureBar = document.getElementById('cpu-usage-temperature-bar') as HTMLElement;
 const gpuCircle = document.getElementById('gpu-usage-circle') as HTMLElement;
 const gpuName = document.getElementById('gpu-usage-name') as HTMLElement;
 const gpuPercentage = document.getElementById('gpu-numbers-percentage') as HTMLElement;
@@ -31,7 +23,7 @@ const { cpu, gpu, mb, ram, setOsInfo, minimize } = window.sow;
  * This function is called every 3 seconds.
  */
 const updateStats = async () => {
-	await cpu.setCpuLoad(cpuCircle, cpuPercentage, cpuPercentageBar);
+	// await cpu.setCpuLoad(cpuCircle, cpuPercentage, cpuPercentageBar);
 	await gpu.setGpuMemoryLoad(gpuCircle, gpuPercentage, gpuPercentageBar);
 	await gpu.setGpuTemperature(gpuTemperature, gpuTemperatureBar);
 	await ram.setMemoryLoad(ramPercentage, ramPercentageBar);
@@ -42,8 +34,6 @@ minimizeButton.addEventListener('click', () => {
 	minimize();
 });
 
-cpu.setCpuName(cpuName);
-cpu.setCpuTemperature(cpuTemperature, cpuTemperatureBar); // TODO: move into updateStats when implemented
 gpu.setGpuName(gpuName);
 ram.setMemoryBanks(ramBanks);
 mb.setMotherBoardName(mbManufacturer, mbModel);

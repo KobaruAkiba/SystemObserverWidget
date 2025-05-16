@@ -27,7 +27,7 @@ body {
 	width: 4px;
 }
 
-.window {
+.app {
 	font-family: monospace;
 	color: white;
 	font-size: clamp(14px, 2vw + 1vh, 24px);

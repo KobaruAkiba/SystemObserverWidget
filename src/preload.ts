@@ -1,10 +1,10 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { ipcEvents } from './Utils/events';
-import { setCpuLoad, setCpuName, setCpuTemperature } from './Renderers/cpuRenderer';
-import { setGpuMemoryLoad, setGpuName, setGpuTemperature } from './Renderers/gpuRenderer';
-import { setOsInfo } from './Renderers/extraRenderers';
-import { setMotherBoardBiosVersion, setMotherBoardName } from './Renderers/motherboardRenderer';
-import { setMemoryBanks, setMemoryLoad } from './Renderers/ramRenderer';
+import { ipcEvents } from './Utils/events.js';
+import { setCpuLoad, setCpuName, setCpuTemperature } from './Renderers/cpuRenderer.js';
+import { setGpuMemoryLoad, setGpuName, setGpuTemperature } from './Renderers/gpuRenderer.js';
+import { setOsInfo } from './Renderers/extraRenderers.js';
+import { setMotherBoardBiosVersion, setMotherBoardName } from './Renderers/motherboardRenderer.js';
+import { setMemoryBanks, setMemoryLoad } from './Renderers/ramRenderer.js';
 
 contextBridge.exposeInMainWorld('sow', {
 	cpu: {

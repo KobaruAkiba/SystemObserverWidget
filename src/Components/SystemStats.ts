@@ -1,9 +1,10 @@
 import { LitElement, html } from 'lit';
-import { customElement, property } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 
 @customElement('system-stats')
 export class SystemStats extends LitElement {
-	@property({ type: String }) cpuUsage: string = '20%';
+	@property({ type: String })
+	cpuUsage = '20%';
 
 	render() {
 		return html`
