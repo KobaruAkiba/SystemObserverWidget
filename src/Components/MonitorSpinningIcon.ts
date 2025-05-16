@@ -3,6 +3,11 @@ import { customElement, property } from 'lit/decorators.js';
 
 @customElement('monitor-spinning-icon')
 export class MonitorSpinningIcon extends LitElement {
+	// Consider removing this and add component style in shadow dom
+	createRenderRoot() {
+		return this;
+	}
+
 	@property({ type: String }) backgroundId = '';
 	@property({ type: String }) spinningId = '';
 

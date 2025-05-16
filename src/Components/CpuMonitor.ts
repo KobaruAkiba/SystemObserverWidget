@@ -5,6 +5,11 @@ import './MonitorSpinningIcon';
 
 @customElement('cpu-monitor')
 export class CpuMonitor extends LitElement {
+	// Consider removing this and add component style in shadow dom
+	createRenderRoot() {
+		return this;
+	}
+
 	@query(`#cpu-usage-container`) cpuUsageContainer!: HTMLDivElement;
 	@query('#cpu-usage-circle') cpuCircle!: HTMLDivElement;
 	@query('#cpu-usage-name') cpuName!: HTMLElement;

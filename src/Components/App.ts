@@ -1,18 +1,15 @@
 import { html, LitElement } from 'lit';
 import { customElement } from 'lit/decorators.js';
 import './CpuMonitor';
-import styles from '../../static/style.css';
-
-console.log('UUU: ', styles);
-const sheet = new CSSStyleSheet();
-sheet.replaceSync(styles.toString());
 
 @customElement('app-component')
 export class App extends LitElement {
-	static styles = [sheet];
+	createRenderRoot() {
+		return this;
+	}
 
 	render() {
-		html`<div class="app">
+		return html`<div class="app">
 			<div class="window-controls">
 				<div class="widget-move-bar"></div>
 				<span class="window-buttons">
@@ -185,4 +182,3 @@ export class App extends LitElement {
 		</div>`;
 	}
 }
-
