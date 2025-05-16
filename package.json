@@ -7,7 +7,7 @@
 	},
 	"version": "0.0.1-alpha",
 	"main": "dist/main.js",
-	"type": "module",
+	"type": "commonjs",
 	"scripts": {
 		"start": "electron-forge start",
 		"make": "electron-forge make",
