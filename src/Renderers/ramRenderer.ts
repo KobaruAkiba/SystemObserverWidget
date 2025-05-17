@@ -27,15 +27,14 @@ export const setMemoryLoad = async (
 		.catch((error) => console.error('Error fetching memory load:', error));
 
 /**
- * Sets the memory banks information to the provided element.
+ * Gets the memory banks information.
  */
-export const setMemoryBanks = async (ramBanksElement: HTMLElement) =>
+export const getMemoryBanksLayout = async () =>
 	si
 		.memLayout()
 		.then((data) => {
 			if (!data || data.length === 0) {
-				ramBanksElement.textContent = 'N/A';
-				return;
+				return 'N/A';
 			}
 
 			let memoriesText = '';
@@ -47,7 +46,10 @@ export const setMemoryBanks = async (ramBanksElement: HTMLElement) =>
 				}
 			});
 
-			ramBanksElement.textContent = memoriesText;
+			return memoriesText;
 		})
-		.catch((error) => console.error('Error fetching memory banks:', error));
+		.catch((error) => {
+			console.error('Error fetching memory banks:', error);
+			return 'N/A';
+		});
 

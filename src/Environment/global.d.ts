@@ -2,19 +2,16 @@ declare global {
 	interface Window {
 		sow: {
 			cpu: {
-				setCpuName: (cpuNameElement: HTMLElement) => Promise<void>;
+				getCpuName: () => Promise<string>;
 				setCpuLoad: (
 					cpuCircleIcon: HTMLElement,
 					cpuPercentageElement: HTMLElement,
 					cpuPercentageBarElement: HTMLElement
 				) => Promise<void>;
-				setCpuTemperature: (
-					cpuTemperatureElement: HTMLElement,
-					cpuTemperatureBarElement: HTMLElement
-				) => Promise<void>;
+				getCpuTemperature: () => Promise<string>;
 			};
 			gpu: {
-				setGpuName: (gpuNameElement: HTMLElement) => Promise<void>;
+				getGpuName: () => Promise<string>;
 				setGpuMemoryLoad: (
 					gpuCircleIcon: HTMLElement,
 					gpuPercentageElement: HTMLElement,
@@ -26,20 +23,17 @@ declare global {
 				) => Promise<void>;
 			};
 			mb: {
-				setMotherBoardName: (
-					mbManufacturerElement: HTMLElement,
-					mbModelElement: HTMLElement
-				) => Promise<void>;
-				setMotherBoardBiosVersion: (mbBiosElement: HTMLElement) => Promise<void>;
+				getMotherboardName: () => Promise<{ manufacturer: string; model: string }>;
+				getMotherboardBiosVersion: () => Promise<string>;
 			};
 			ram: {
 				setMemoryLoad: (
 					ramPercentageElement: HTMLElement,
 					ramPercentageBarElement: HTMLElement
 				) => Promise<void>;
-				setMemoryBanks: (ramBanksElement: HTMLElement) => Promise<void>;
+				getMemoryBanksLayout: () => Promise<string>;
 			};
-			setOsInfo: (osDistroElement: HTMLElement, osArchElement: HTMLElement) => Promise<void>;
+			getOsInfo: () => Promise<{ distro: string; arch: string }>;
 			minimize: () => void;
 		};
 	}

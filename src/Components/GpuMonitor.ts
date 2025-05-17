@@ -1,5 +1,5 @@
-import { html, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { html, LitElement, PropertyValues } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
 import './MonitorSpinningIcon';
 import './PercentageMonitorBar';
 
@@ -8,6 +8,12 @@ export class GpuMonitor extends LitElement {
 	// Consider removing this and add component style in shadow dom
 	createRenderRoot() {
 		return this;
+	}
+
+	@state() gpuName = '...';
+
+	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
+		this.gpuName = await window.sow.gpu.getGpuName();
 	}
 
 	render() {
@@ -29,7 +35,7 @@ export class GpuMonitor extends LitElement {
 					id="gpu-usage-name"
 					class="text-ellipsis"
 				>
-					...
+					${this.gpuName}
 				</div>
 				<percentage-monitor-bar
 					barId="gpu-usage-percentage-bar"

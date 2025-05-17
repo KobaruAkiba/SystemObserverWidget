@@ -1,28 +1,36 @@
 import si from 'systeminformation';
 
 /**
- * Sets the motherboard name and model to the provided elements.
+ * Gets the motherboard name and model.
  */
-export const setMotherBoardName = async (
-	mbManufacturerElement: HTMLElement,
-	mbModelElement: HTMLElement
-) =>
+export const getMotherboardName = async () =>
 	si
 		.baseboard()
 		.then((data) => {
-			mbManufacturerElement.textContent = data.manufacturer || 'N/A';
-			mbModelElement.textContent = data.model || 'N/A';
+			return {
+				manufacturer: data.manufacturer || 'N/A',
+				model: data.model || 'N/A',
+			};
 		})
-		.catch((error) => console.error('Error fetching baseboard info:', error));
+		.catch((error) => {
+			console.error('Error fetching baseboard info:', error);
+			return {
+				manufacturer: 'N/A',
+				model: 'N/A',
+			};
+		});
 
 /**
- *Sets the motherboard bios version to the provided element.
+ * Gets the motherboard bios version.
  */
-export const setMotherBoardBiosVersion = async (mbBiosElement: HTMLElement) =>
+export const getMotherboardBiosVersion = async () =>
 	si
 		.bios()
 		.then((data) => {
-			mbBiosElement.textContent = `${data.vendor} v.${data.version}` || 'N/A';
+			return `${data.vendor} v.${data.version}` || 'N/A';
 		})
-		.catch((error) => console.error('Error fetching BIOS info:', error));
+		.catch((error) => {
+			console.error('Error fetching BIOS info:', error);
+			return 'N/A';
+		});
 

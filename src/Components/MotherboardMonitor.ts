@@ -1,11 +1,22 @@
-import { html, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { html, LitElement, PropertyValues } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
 
 @customElement('motherboard-monitor')
 export class MotherboardMonitor extends LitElement {
 	// Consider removing this and add component style in shadow dom
 	createRenderRoot() {
 		return this;
+	}
+
+	@state() mbManufacturer = '...';
+	@state() mbModel = '...';
+	@state() mbBios = '...';
+
+	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
+		const mb = await window.sow.mb.getMotherboardName();
+		this.mbBios = await window.sow.mb.getMotherboardBiosVersion();
+		this.mbManufacturer = mb.manufacturer;
+		this.mbModel = mb.model;
 	}
 
 	render() {
@@ -23,19 +34,19 @@ export class MotherboardMonitor extends LitElement {
 					id="motherboard-manufacturer"
 					class="text-ellipsis"
 				>
-					...
+					${this.mbManufacturer}
 				</div>
 				<div
 					id="motherboard-model"
 					class="text-ellipsis"
 				>
-					...
+					${this.mbModel}
 				</div>
 				<div
 					id="motherboard-bios"
 					class="text-ellipsis"
 				>
-					...
+					${this.mbBios}
 				</div>
 			</div>
 		</div>`;

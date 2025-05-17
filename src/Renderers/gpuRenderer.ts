@@ -7,15 +7,18 @@ import { getGpuMemoryUsage, getGpuTemperature } from '../Utils/gpuInfo';
 import { toPercentage } from '../Utils/numbers';
 
 /**
- * Gets the gpu name and sets it to the gpuName element.
+ * Gets the gpu name.
  */
-export const setGpuName = async (gpuNameElement: HTMLElement) =>
+export const getGpuName = async () =>
 	await si
 		.graphics()
 		.then((gpuData) => {
-			gpuNameElement.textContent = gpuData.controllers[0].model || 'N/A';
+			return gpuData.controllers[0].model || 'N/A';
 		})
-		.catch((error) => console.error('Error fetching GPU data:', error));
+		.catch((error) => {
+			console.error('Error fetching GPU data:', error);
+			return 'N/A';
+		});
 
 /**
  * Sets the gpu load to the gpuPercentage element and sets the animation duration of the gpuCircle element.

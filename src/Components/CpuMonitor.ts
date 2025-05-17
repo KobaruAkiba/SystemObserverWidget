@@ -1,5 +1,5 @@
 import { html, LitElement, PropertyValues } from 'lit';
-import { customElement, query } from 'lit/decorators.js';
+import { customElement, property, query, state } from 'lit/decorators.js';
 import './MonitorSpinningIcon';
 
 @customElement('cpu-monitor')
@@ -11,14 +11,16 @@ export class CpuMonitor extends LitElement {
 
 	@query(`#cpu-usage-container`) cpuUsageContainer!: HTMLDivElement;
 	@query('#cpu-usage-circle') cpuCircle!: HTMLDivElement;
-	@query('#cpu-usage-name') cpuName!: HTMLElement;
+	@query('#cpu-usage-name') cpuNameElement!: HTMLElement;
 	@query('#cpu-numbers-percentage') cpuPercentage!: HTMLElement;
 	@query('#cpu-usage-percentage-bar') cpuPercentageBar!: HTMLElement;
 	@query('#cpu-numbers-temperature') cpuTemperature!: HTMLElement;
 	@query('#cpu-usage-temperature-bar') cpuTemperatureBar!: HTMLElement;
 
+	@state() cpuName = '...';
+
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
-		await window.sow.cpu.setCpuName(this.cpuName);
+		this.cpuName = await window.sow.cpu.getCpuName();
 	}
 
 	render() {
@@ -41,7 +43,7 @@ export class CpuMonitor extends LitElement {
 						id="cpu-usage-name"
 						class="text-ellipsis"
 					>
-						...
+						${this.cpuName}
 					</div>
 					<percentage-monitor-bar
 						barId="cpu-usage-percentage-bar"

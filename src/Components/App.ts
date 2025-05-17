@@ -1,5 +1,5 @@
-import { html, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { html, LitElement, PropertyValues } from 'lit';
+import { customElement, query } from 'lit/decorators.js';
 import './CpuMonitor';
 import './GpuMonitor';
 import './MotherboardMonitor';
@@ -11,6 +11,14 @@ export class App extends LitElement {
 	// Consider removing this and add component style in shadow dom
 	createRenderRoot() {
 		return this;
+	}
+
+	@query('#minimize-button') minimizeButton!: HTMLElement;
+
+	protected firstUpdated(_changedProperties: PropertyValues): void {
+		this.minimizeButton.addEventListener('click', () => {
+			window.sow.minimize();
+		});
 	}
 
 	render() {

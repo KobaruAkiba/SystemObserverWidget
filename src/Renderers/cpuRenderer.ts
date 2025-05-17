@@ -5,15 +5,18 @@ import {
 } from '../Utils/styling';
 
 /**
- * Gets the cpu name and sets it to the cpuName element.
+ * Gets the cpu name.
  */
-export const setCpuName = async (cpuNameElement: HTMLElement) =>
+export const getCpuName = async () =>
 	await si
 		.cpu()
 		.then((cpuData) => {
-			cpuNameElement.textContent = cpuData.manufacturer + ' ' + cpuData.brand || 'N/A';
+			return cpuData.manufacturer + ' ' + cpuData.brand || 'N/A';
 		})
-		.catch((error) => console.error('Error fetching CPU data:', error));
+		.catch((error) => {
+			console.error('Error fetching CPU data:', error);
+			return 'N/A';
+		});
 
 /**
  * Sets the cpu load to the cpuPercentage element and sets the animation duration of the cpuCircle element.
@@ -43,13 +46,9 @@ export const setCpuLoad = async (
 		.catch((error) => console.error('Error fetching current load data:', error));
 
 /**
- * Sets the cpu temperature to the cpuTemperature element.
+ * Gets the cpu temperature.
  */
-export const setCpuTemperature = (
-	cpuTemperatureElement: HTMLElement,
-	cpuTemperatureBarElement: HTMLElement
-) => {
+export const getCpuTemperature = () => {
 	// TODO: implementare il recupero della temperatura della CPU
-	cpuTemperatureElement.textContent = 'N/A °C';
-	cpuTemperatureBarElement.style.width = '0%';
+	return 'N/A';
 };
