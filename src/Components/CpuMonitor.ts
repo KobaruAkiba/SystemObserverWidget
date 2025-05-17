@@ -1,6 +1,5 @@
 import { html, LitElement, PropertyValues } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
-import './SystemStats';
+import { customElement, query } from 'lit/decorators.js';
 import './MonitorSpinningIcon';
 
 @customElement('cpu-monitor')
@@ -31,7 +30,8 @@ export class CpuMonitor extends LitElement {
 				<monitor-spinning-icon
 					backgroundId="cpu-usage-icon"
 					spinningId="cpu-usage-circle"
-				></monitor-spinning-icon>
+				>
+				</monitor-spinning-icon>
 				<div
 					id="cpu-usage-info"
 					class="grid-item"
@@ -43,44 +43,20 @@ export class CpuMonitor extends LitElement {
 					>
 						...
 					</div>
-					<div class="filling-bar-container">
-						[
-						<span class="filling-bar-wrapper">
-							<span
-								id="cpu-usage-percentage-bar"
-								class="filling-bar"
-							>
-								<span class="filling-line-trashold trashold-40"></span>
-								<span class="filling-line-trashold trashold-75"></span>
-								<span class="filling-line-trashold trashold-90"></span>
-							</span>
-						</span>
-						<span
-							id="cpu-numbers-percentage"
-							class="filling-bar-usage-number"
-							>...%</span
-						>
-						]
-					</div>
-					<div class="filling-bar-container">
-						[
-						<span class="filling-bar-wrapper">
-							<span
-								id="cpu-usage-temperature-bar"
-								class="filling-bar"
-							>
-								<span class="filling-line-trashold trashold-40"></span>
-								<span class="filling-line-trashold trashold-75"></span>
-								<span class="filling-line-trashold trashold-90"></span>
-							</span>
-						</span>
-						<span
-							id="cpu-numbers-temperature"
-							class="filling-bar-usage-number"
-							>...°C</span
-						>
-						]
-					</div>
+					<percentage-monitor-bar
+						barId="cpu-usage-percentage-bar"
+						progressTextId="cpu-numbers-percentage"
+						progressText="...%"
+						style="width:100%;"
+					>
+					</percentage-monitor-bar>
+					<percentage-monitor-bar
+						barId="cpu-usage-temperature-bar"
+						progressTextId="cpu-numbers-temperature"
+						progressText="...°C"
+						style="width:100%;"
+					>
+					</percentage-monitor-bar>
 				</div>
 			</div>
 		`;
