@@ -13,13 +13,7 @@ export class App extends LitElement {
 		return this;
 	}
 
-	@query('#minimize-button') minimizeButton!: HTMLElement;
-
-	protected firstUpdated(_changedProperties: PropertyValues): void {
-		this.minimizeButton.addEventListener('click', () => {
-			window.sow.minimize();
-		});
-	}
+	private handleClick = () => window.sow.minimize();
 
 	render() {
 		return html`<div class="app">
@@ -29,6 +23,7 @@ export class App extends LitElement {
 					<button
 						id="minimize-button"
 						class="window-button"
+						@click=${this.handleClick}
 					>
 						-
 					</button>
