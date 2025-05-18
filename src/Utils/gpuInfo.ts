@@ -1,12 +1,12 @@
 import { exec } from 'child_process';
 import { promisify } from 'util';
 
-const execAsync = promisify(exec);
-
 export interface IGpuMemoryUsage {
 	used: number;
 	total: number;
 }
+
+const execAsync = promisify(exec);
 
 /**
  * Fallbacks to nvidia-smi to get GPU memory usage

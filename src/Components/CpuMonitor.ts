@@ -1,10 +1,11 @@
 import { html, LitElement, PropertyValues } from 'lit';
-import { customElement, property, query, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import './MonitorSpinningIcon';
 import {
 	calculateAnimationDurationFromPercentage,
 	calculateColorFromPercentage,
 } from 'src/Utils/styling';
+import { nameof } from 'src/Utils/types';
 
 @customElement('cpu-monitor')
 export class CpuMonitor extends LitElement {
@@ -14,34 +15,36 @@ export class CpuMonitor extends LitElement {
 	}
 
 	@property({ type: Number }) cpuLoad = 0;
+
 	@state() cpuName = '...';
-	@state() cpuPercentage = '...%';
-	@state() cpuTemperature = '...°C';
+	@state() cpuPercentageText = '...%';
 	@state() cpuFanSpinningDuration = '1s';
-	@state() cpuPercentageBarWidth = '0%';
 	@state() cpuPercentageBarColor = 'green';
+
+	@state() cpuTemperatureText = '...°C';
 
 	protected firstUpdated(_changedProperties: PropertyValues): void {
 		const { cpu } = window.sow;
 		cpu.getCpuName().then((response) => (this.cpuName = response));
-		this.cpuTemperature = `${cpu.getCpuTemperature()}°C`;
+		this.cpuTemperatureText = `${cpu.getCpuTemperature()}°C`;
 	}
 
 	protected willUpdate(_changedProperties: PropertyValues): void {
-		if (_changedProperties.has('cpuLoad')) {
+		if (_changedProperties.has(nameof<CpuMonitor>('cpuLoad'))) {
 			this.updateCpuLoad();
 		}
 	}
 
-	updateCpuLoad(): void {
+	private updateCpuLoad(): void {
 		if (this.cpuLoad < 0) {
-			this.cpuPercentage = 'N/A%';
+			this.cpuPercentageText = 'N/A%';
+			this.cpuFanSpinningDuration = '1s';
+			this.cpuPercentageBarColor = 'green';
 			return;
 		}
 
-		this.cpuPercentage = `${this.cpuLoad.toFixed(1)}%`;
+		this.cpuPercentageText = `${this.cpuLoad.toFixed(1)}%`;
 		this.cpuFanSpinningDuration = `${calculateAnimationDurationFromPercentage(this.cpuLoad)}s`;
-		this.cpuPercentageBarWidth = `${this.cpuLoad}%`;
 		this.cpuPercentageBarColor = calculateColorFromPercentage(this.cpuLoad);
 	}
 
@@ -69,14 +72,16 @@ export class CpuMonitor extends LitElement {
 						${this.cpuName}
 					</div>
 					<percentage-monitor-bar
-						barWidth=${this.cpuPercentageBarWidth}
+						barWidth=${this.cpuPercentageText}
 						barBackgroundColor=${this.cpuPercentageBarColor}
-						progressText=${this.cpuPercentage}
+						progressText=${this.cpuPercentageText}
 						style="width: 100%;"
 					>
 					</percentage-monitor-bar>
 					<percentage-monitor-bar
-						progressText=${this.cpuTemperature}
+						barWidth="0%"
+						barBackgroundColor="green"
+						progressText=${this.cpuTemperatureText}
 						style="width: 100%;"
 					>
 					</percentage-monitor-bar>

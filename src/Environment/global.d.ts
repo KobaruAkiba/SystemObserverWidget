@@ -8,15 +8,9 @@ declare global {
 			};
 			gpu: {
 				getGpuName: () => Promise<string>;
-				setGpuMemoryLoad: (
-					gpuCircleIcon: HTMLElement,
-					gpuPercentageElement: HTMLElement,
-					gpuPercentageBarElement: HTMLElement
-				) => Promise<void>;
-				setGpuTemperature: (
-					gpuTemperatureElement: HTMLElement,
-					gpuTemperatureBarElement: HTMLElement
-				) => Promise<void>;
+				getGpuMemoryLoad: () => Promise<number>;
+				getGpuTotalMemory: () => Promise<number>;
+				getGpuLoadTemperature: () => Promise<number>;
 			};
 			mb: {
 				getMotherboardName: () => Promise<{ manufacturer: string; model: string }>;

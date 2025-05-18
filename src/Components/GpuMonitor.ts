@@ -1,7 +1,13 @@
 import { html, LitElement, PropertyValues } from 'lit';
-import { customElement, state } from 'lit/decorators.js';
+import { customElement, property, state } from 'lit/decorators.js';
 import './MonitorSpinningIcon';
 import './PercentageMonitorBar';
+import { nameof } from 'src/Utils/types';
+import { toPercentage } from 'src/Utils/numbers';
+import {
+	calculateAnimationDurationFromPercentage,
+	calculateColorFromPercentage,
+} from 'src/Utils/styling';
 
 @customElement('gpu-monitor')
 export class GpuMonitor extends LitElement {
@@ -10,10 +16,62 @@ export class GpuMonitor extends LitElement {
 		return this;
 	}
 
-	@state() gpuName = '...';
+	@property({ type: Number }) gpuLoad = 0;
+	@property({ type: Number }) gpuTemperature = 0;
 
-	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
-		this.gpuName = await window.sow.gpu.getGpuName();
+	gpuTotalMemory = 0;
+	gpuCriticalTemperature = 82; // Assuming 82°C is the max temperature
+
+	@state() gpuName = '...';
+	@state() gpuPercentageText = '...%';
+	@state() gpuFanSpinningDuration = '1s';
+	@state() gpuPercentageBarColor = 'green';
+
+	@state() gpuTemperatureText = '...°C';
+	@state() gpuTemperatureBarWidth = '0%';
+	@state() gpuTemperatureBarColor = 'green';
+
+	protected firstUpdated(_changedProperties: PropertyValues): void {
+		window.sow.gpu.getGpuName().then((response) => (this.gpuName = response));
+		window.sow.gpu.getGpuTotalMemory().then((response) => (this.gpuTotalMemory = response));
+	}
+
+	protected willUpdate(_changedProperties: PropertyValues): void {
+		if (_changedProperties.has(nameof<GpuMonitor>('gpuLoad')) && this.gpuTotalMemory >= 0) {
+			this.updateGpuLoad();
+		}
+
+		if (_changedProperties.has(nameof<GpuMonitor>('gpuTemperature'))) {
+			this.updateGpuTemperature();
+		}
+	}
+
+	private updateGpuLoad() {
+		if (this.gpuLoad < 0 || this.gpuTotalMemory < 0) {
+			this.gpuPercentageText = 'N/A%';
+			this.gpuFanSpinningDuration = '1s';
+			this.gpuPercentageBarColor = 'green';
+			return;
+		}
+
+		const percentage = toPercentage(this.gpuLoad, this.gpuTotalMemory);
+		this.gpuFanSpinningDuration = `${calculateAnimationDurationFromPercentage(percentage)}s`;
+		this.gpuPercentageText = `${percentage.toFixed(1)}%`;
+		this.gpuPercentageBarColor = calculateColorFromPercentage(percentage);
+	}
+
+	private updateGpuTemperature() {
+		if (this.gpuTemperature < 0) {
+			this.gpuTemperatureText = 'N/A°C';
+			this.gpuTemperatureBarWidth = '0%';
+			this.gpuTemperatureBarColor = 'green';
+			return;
+		}
+
+		const temperaturePercentage = toPercentage(this.gpuTemperature, this.gpuCriticalTemperature);
+		this.gpuTemperatureText = `${this.gpuTemperature}°C`;
+		this.gpuTemperatureBarWidth = `${temperaturePercentage}%`;
+		this.gpuTemperatureBarColor = calculateColorFromPercentage(temperaturePercentage);
 	}
 
 	render() {
@@ -24,6 +82,7 @@ export class GpuMonitor extends LitElement {
 			<monitor-spinning-icon
 				backgroundId="gpu-usage-icon"
 				spinningId="gpu-usage-circle"
+				spinningDuration=${this.gpuFanSpinningDuration}
 			>
 			</monitor-spinning-icon>
 			<div
@@ -38,16 +97,16 @@ export class GpuMonitor extends LitElement {
 					${this.gpuName}
 				</div>
 				<percentage-monitor-bar
-					barId="gpu-usage-percentage-bar"
-					progressTextId="gpu-numbers-percentage"
-					progressText="...%"
+					barWidth=${this.gpuPercentageText}
+					barBackgroundColor=${this.gpuTemperatureBarColor}
+					progressText=${this.gpuPercentageText}
 					style="width:100%;"
 				>
 				</percentage-monitor-bar>
 				<percentage-monitor-bar
-					barId="gpu-usage-temperature-bar"
-					progressTextId="gpu-numbers-temperature"
-					progressText="...°C"
+					barWidth=${this.gpuTemperatureBarWidth}
+					barBackgroundColor=${this.gpuTemperatureBarColor}
+					progressText=${this.gpuTemperatureText}
 					style="width:100%;"
 				>
 				</percentage-monitor-bar>

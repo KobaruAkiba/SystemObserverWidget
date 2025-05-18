@@ -1,10 +1,5 @@
 import si from 'systeminformation';
-import {
-	calculateAnimationDurationFromPercentage,
-	calculateColorFromPercentage,
-} from '../Utils/styling';
 import { getGpuMemoryUsage, getGpuTemperature } from '../Utils/gpuInfo';
-import { toPercentage } from '../Utils/numbers';
 
 /**
  * Gets the gpu name.
@@ -16,54 +11,40 @@ export const getGpuName = async () =>
 			return gpuData.controllers[0].model || 'N/A';
 		})
 		.catch((error) => {
-			console.error('Error fetching GPU data:', error);
+			console.error('Error fetching GPU data: ', error);
 			return 'N/A';
 		});
 
 /**
- * Sets the gpu load to the gpuPercentage element and sets the animation duration of the gpuCircle element.
+ * Gets the gpu memory currently used.
  */
-export const setGpuMemoryLoad = async (
-	gpuCircleIcon: HTMLElement,
-	gpuPercentageElement: HTMLElement,
-	gpuPercentageBarElement: HTMLElement
-) =>
+export const getGpuMemoryLoad = async () =>
 	await getGpuMemoryUsage()
-		.then((gpuMemoryData) => {
-			if (!gpuMemoryData) {
-				gpuPercentageElement.textContent = 'N/A';
-				gpuPercentageBarElement.style.width = '0%';
-				return;
-			}
-
-			const percentage = toPercentage(gpuMemoryData.used, gpuMemoryData.total);
-			gpuCircleIcon.style.animationDuration = `${calculateAnimationDurationFromPercentage(percentage)}s`;
-			gpuPercentageElement.textContent = `${percentage.toFixed(1)}%`;
-			gpuPercentageBarElement.style.width = `${percentage}%`;
-			gpuPercentageBarElement.style.backgroundColor = calculateColorFromPercentage(percentage);
-		})
-		.catch((error) => console.error('Error fetching GPU memory data:', error));
+		.then((data) => data?.used || -1)
+		.catch((error) => {
+			console.error('Error fetching GPU memory data: ', error);
+			return -1;
+		});
 
 /**
- * Sets the gpu temperature to the gpuTemperature element.
+ * Gets the gpu total memory
  */
-export const setGpuTemperature = async (
-	gpuTemperatureElement: HTMLElement,
-	gpuTemperatureBarElement: HTMLElement
-) =>
-	await getGpuTemperature()
-		.then((tempData) => {
-			if (!tempData) {
-				gpuTemperatureElement.textContent = 'N/A';
-				gpuTemperatureBarElement.style.width = `0%`;
-				return;
-			}
+export const getGpuTotalMemory = async () =>
+	await getGpuMemoryUsage()
+		.then((data) => data?.total || -1)
+		.catch((error) => {
+			console.error('Error fetching GPU total memory: ', error);
+			return -1;
+		});
 
-			const temperaturePercentage = toPercentage(tempData, 82); // Assuming 82°C is the max temperature
-			gpuTemperatureElement.textContent = `${tempData}°C`;
-			gpuTemperatureBarElement.style.width = `${temperaturePercentage}%`;
-			gpuTemperatureBarElement.style.backgroundColor =
-				calculateColorFromPercentage(temperaturePercentage);
-		})
-		.catch((error) => console.error('Error fetching GPU temperature data:', error));
+/**
+ * Gets the gpu current temperature
+ */
+export const getGpuLoadTemperature = async () =>
+	await getGpuTemperature()
+		.then((data) => data || -1)
+		.catch((error) => {
+			console.error('Error fetching GPU temperature data: ', error);
+			return -1;
+		});
 

@@ -1,7 +1,12 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { ipcEvents } from './Utils/events.js';
 import { getCpuLoad, getCpuName, getCpuTemperature } from './Renderers/cpuRenderer.js';
-import { setGpuMemoryLoad, getGpuName, setGpuTemperature } from './Renderers/gpuRenderer.js';
+import {
+	getGpuName,
+	getGpuMemoryLoad,
+	getGpuLoadTemperature,
+	getGpuTotalMemory,
+} from './Renderers/gpuRenderer.js';
 import { getOsInfo } from './Renderers/extraRenderers.js';
 import { getMotherboardBiosVersion, getMotherboardName } from './Renderers/motherboardRenderer.js';
 import { getMemoryBanksLayout, setMemoryLoad } from './Renderers/ramRenderer.js';
@@ -14,13 +19,9 @@ contextBridge.exposeInMainWorld('sow', {
 	},
 	gpu: {
 		getGpuName: () => getGpuName(),
-		setGpuMemoryLoad: (
-			gpuCircleIcon: HTMLElement,
-			gpuPercentageElement: HTMLElement,
-			gpuPercentageBarElement: HTMLElement
-		) => setGpuMemoryLoad(gpuCircleIcon, gpuPercentageElement, gpuPercentageBarElement),
-		setGpuTemperature: (gpuTemperatureElement: HTMLElement, gpuTemperatureBarElement: HTMLElement) =>
-			setGpuTemperature(gpuTemperatureElement, gpuTemperatureBarElement),
+		getGpuMemoryLoad: () => getGpuMemoryLoad(),
+		getGpuTotalMemory: () => getGpuTotalMemory(),
+		getGpuLoadTemperature: () => getGpuLoadTemperature(),
 	},
 	mb: {
 		getMotherboardName: () => getMotherboardName(),

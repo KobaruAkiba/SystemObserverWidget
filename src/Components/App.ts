@@ -1,5 +1,5 @@
 import { html, LitElement, PropertyValues } from 'lit';
-import { customElement, query, state } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import './CpuMonitor';
 import './GpuMonitor';
 import './MotherboardMonitor';
@@ -22,6 +22,8 @@ export class App extends LitElement {
 	private updateStates = () => {
 		const { cpu, gpu, ram } = window.sow;
 		cpu.getCpuLoad().then((response) => (this.cpuLoad = response));
+		gpu.getGpuMemoryLoad().then((response) => (this.gpuLoad = response));
+		gpu.getGpuLoadTemperature().then((response) => (this.gpuTemperature = response));
 	};
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
@@ -44,7 +46,11 @@ export class App extends LitElement {
 			</div>
 			<div class="content">
 				<cpu-monitor cpuLoad=${this.cpuLoad}></cpu-monitor>
-				<gpu-monitor></gpu-monitor>
+				<gpu-monitor
+					gpuLoad=${this.gpuLoad}
+					gpuTemperature=${this.gpuTemperature}
+				>
+				</gpu-monitor>
 				<ram-monitor></ram-monitor>
 				<motherboard-monitor></motherboard-monitor>
 				<operative-monitor></operative-monitor>

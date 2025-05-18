@@ -22,7 +22,7 @@ export const getCpuLoad = async () =>
 		.currentLoad()
 		.then((cpuData) => (cpuData ? cpuData.currentLoad : -1))
 		.catch((error) => {
-			console.log('Error fetching current load data:', error);
+			console.error('Error fetching current load data: ', error);
 			return -1;
 		});
 
