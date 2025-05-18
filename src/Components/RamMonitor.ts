@@ -1,5 +1,5 @@
-import { html, LitElement } from 'lit';
-import { customElement } from 'lit/decorators.js';
+import { html, LitElement, PropertyValues } from 'lit';
+import { customElement, state } from 'lit/decorators.js';
 import './PercentageMonitorBar';
 
 @customElement('ram-monitor')
@@ -7,6 +7,12 @@ export class RamMonitor extends LitElement {
 	// Consider removing this and add component style in shadow dom
 	createRenderRoot() {
 		return this;
+	}
+
+	@state() memoryBanksLayout = '...';
+
+	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
+		this.memoryBanksLayout = await window.sow.ram.getMemoryBanksLayout();
 	}
 
 	render() {
@@ -24,7 +30,7 @@ export class RamMonitor extends LitElement {
 					id="ram-banks"
 					class="text-ellipsis"
 				>
-					...
+					${this.memoryBanksLayout}
 				</div>
 				<percentage-monitor-bar
 					barId="ram-usage-percentage-bar"

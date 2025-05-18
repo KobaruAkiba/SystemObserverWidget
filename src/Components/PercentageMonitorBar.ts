@@ -8,28 +8,24 @@ export class PercentageMonitorBar extends LitElement {
 		return this;
 	}
 
-	@property({ type: String }) barId = '';
-	@property({ type: String }) progressTextId = '';
 	@property({ type: String }) progressText = '';
+	@property({ type: String }) barWidth = '';
+	@property({ type: String }) barBackgroundColor = '';
 
 	render() {
 		return html`<div class="filling-bar-container">
 			[
 			<span class="filling-bar-wrapper">
 				<span
-					id=${this.barId}
 					class="filling-bar"
+					style="width: ${this.barWidth}; background-color: ${this.barBackgroundColor};"
 				>
 					<span class="filling-line-trashold trashold-40"></span>
 					<span class="filling-line-trashold trashold-75"></span>
 					<span class="filling-line-trashold trashold-90"></span>
 				</span>
 			</span>
-			<span
-				id=${this.progressTextId}
-				class="filling-bar-usage-number"
-				>${this.progressText}</span
-			>
+			<span class="filling-bar-usage-number">${this.progressText}</span>
 			]
 		</div>`;
 	}

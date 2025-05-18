@@ -1,6 +1,6 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { ipcEvents } from './Utils/events.js';
-import { setCpuLoad, getCpuName, getCpuTemperature } from './Renderers/cpuRenderer.js';
+import { getCpuLoad, getCpuName, getCpuTemperature } from './Renderers/cpuRenderer.js';
 import { setGpuMemoryLoad, getGpuName, setGpuTemperature } from './Renderers/gpuRenderer.js';
 import { getOsInfo } from './Renderers/extraRenderers.js';
 import { getMotherboardBiosVersion, getMotherboardName } from './Renderers/motherboardRenderer.js';
@@ -9,11 +9,7 @@ import { getMemoryBanksLayout, setMemoryLoad } from './Renderers/ramRenderer.js'
 contextBridge.exposeInMainWorld('sow', {
 	cpu: {
 		getCpuName: () => getCpuName(),
-		setCpuLoad: (
-			cpuCircleIcon: HTMLElement,
-			cpuPercentageElement: HTMLElement,
-			cpuPercentageBarElement: HTMLElement
-		) => setCpuLoad(cpuCircleIcon, cpuPercentageElement, cpuPercentageBarElement),
+		getCpuLoad: () => getCpuLoad(),
 		getCpuTemperature: () => getCpuTemperature(),
 	},
 	gpu: {

@@ -36,3 +36,10 @@ export const toPercentage = (value: number, total: number): number => {
 	return (value / total) * 100;
 };
 
+/**
+ * Checks if passed value is a number
+ * @param val Value to check
+ * @returns True if value has type number
+ */
+export const isNumber = (val: unknown): val is number => typeof val === 'number';
+

@@ -1,6 +1,10 @@
 import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, property, query, state } from 'lit/decorators.js';
 import './MonitorSpinningIcon';
+import {
+	calculateAnimationDurationFromPercentage,
+	calculateColorFromPercentage,
+} from 'src/Utils/styling';
 
 @customElement('cpu-monitor')
 export class CpuMonitor extends LitElement {
@@ -9,18 +13,36 @@ export class CpuMonitor extends LitElement {
 		return this;
 	}
 
-	@query(`#cpu-usage-container`) cpuUsageContainer!: HTMLDivElement;
-	@query('#cpu-usage-circle') cpuCircle!: HTMLDivElement;
-	@query('#cpu-usage-name') cpuNameElement!: HTMLElement;
-	@query('#cpu-numbers-percentage') cpuPercentage!: HTMLElement;
-	@query('#cpu-usage-percentage-bar') cpuPercentageBar!: HTMLElement;
-	@query('#cpu-numbers-temperature') cpuTemperature!: HTMLElement;
-	@query('#cpu-usage-temperature-bar') cpuTemperatureBar!: HTMLElement;
-
+	@property({ type: Number }) cpuLoad = 0;
 	@state() cpuName = '...';
+	@state() cpuPercentage = '...%';
+	@state() cpuTemperature = '...°C';
+	@state() cpuFanSpinningDuration = '1s';
+	@state() cpuPercentageBarWidth = '0%';
+	@state() cpuPercentageBarColor = 'green';
 
-	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
-		this.cpuName = await window.sow.cpu.getCpuName();
+	protected firstUpdated(_changedProperties: PropertyValues): void {
+		const { cpu } = window.sow;
+		cpu.getCpuName().then((response) => (this.cpuName = response));
+		this.cpuTemperature = `${cpu.getCpuTemperature()}°C`;
+	}
+
+	protected willUpdate(_changedProperties: PropertyValues): void {
+		if (_changedProperties.has('cpuLoad')) {
+			this.updateCpuLoad();
+		}
+	}
+
+	updateCpuLoad(): void {
+		if (this.cpuLoad < 0) {
+			this.cpuPercentage = 'N/A%';
+			return;
+		}
+
+		this.cpuPercentage = `${this.cpuLoad.toFixed(1)}%`;
+		this.cpuFanSpinningDuration = `${calculateAnimationDurationFromPercentage(this.cpuLoad)}s`;
+		this.cpuPercentageBarWidth = `${this.cpuLoad}%`;
+		this.cpuPercentageBarColor = calculateColorFromPercentage(this.cpuLoad);
 	}
 
 	render() {
@@ -32,6 +54,7 @@ export class CpuMonitor extends LitElement {
 				<monitor-spinning-icon
 					backgroundId="cpu-usage-icon"
 					spinningId="cpu-usage-circle"
+					spinningDuration=${this.cpuFanSpinningDuration}
 				>
 				</monitor-spinning-icon>
 				<div
@@ -46,17 +69,15 @@ export class CpuMonitor extends LitElement {
 						${this.cpuName}
 					</div>
 					<percentage-monitor-bar
-						barId="cpu-usage-percentage-bar"
-						progressTextId="cpu-numbers-percentage"
-						progressText="...%"
-						style="width:100%;"
+						barWidth=${this.cpuPercentageBarWidth}
+						barBackgroundColor=${this.cpuPercentageBarColor}
+						progressText=${this.cpuPercentage}
+						style="width: 100%;"
 					>
 					</percentage-monitor-bar>
 					<percentage-monitor-bar
-						barId="cpu-usage-temperature-bar"
-						progressTextId="cpu-numbers-temperature"
-						progressText="...°C"
-						style="width:100%;"
+						progressText=${this.cpuTemperature}
+						style="width: 100%;"
 					>
 					</percentage-monitor-bar>
 				</div>
@@ -64,4 +85,3 @@ export class CpuMonitor extends LitElement {
 		`;
 	}
 }
-

@@ -10,6 +10,7 @@ export class MonitorSpinningIcon extends LitElement {
 
 	@property({ type: String }) backgroundId = '';
 	@property({ type: String }) spinningId = '';
+	@property({ type: String }) spinningDuration = '1s';
 
 	render() {
 		return html` <div
@@ -19,6 +20,7 @@ export class MonitorSpinningIcon extends LitElement {
 			<div
 				id=${this.spinningId}
 				class="circle spinning-icon"
+				style="animation-duration: ${this.spinningDuration};"
 			></div>
 		</div>`;
 	}

@@ -3,12 +3,8 @@ declare global {
 		sow: {
 			cpu: {
 				getCpuName: () => Promise<string>;
-				setCpuLoad: (
-					cpuCircleIcon: HTMLElement,
-					cpuPercentageElement: HTMLElement,
-					cpuPercentageBarElement: HTMLElement
-				) => Promise<void>;
-				getCpuTemperature: () => Promise<string>;
+				getCpuLoad: () => Promise<number>;
+				getCpuTemperature: () => string;
 			};
 			gpu: {
 				getGpuName: () => Promise<string>;
