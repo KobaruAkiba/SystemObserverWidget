@@ -25,6 +25,7 @@ export class GpuMonitor extends LitElement {
 	@state() gpuName = '...';
 	@state() gpuPercentageText = '...%';
 	@state() gpuFanSpinningDuration = '1s';
+	@state() gpuPercentageBarWidth = '0%';
 	@state() gpuPercentageBarColor = 'green';
 
 	@state() gpuTemperatureText = '...°C';
@@ -32,12 +33,13 @@ export class GpuMonitor extends LitElement {
 	@state() gpuTemperatureBarColor = 'green';
 
 	protected firstUpdated(_changedProperties: PropertyValues): void {
-		window.sow.gpu.getGpuName().then((response) => (this.gpuName = response));
-		window.sow.gpu.getGpuTotalMemory().then((response) => (this.gpuTotalMemory = response));
+		const { gpu } = window.sow;
+		gpu.getGpuName().then((response) => (this.gpuName = response));
+		gpu.getGpuTotalMemory().then((response) => (this.gpuTotalMemory = response));
 	}
 
 	protected willUpdate(_changedProperties: PropertyValues): void {
-		if (_changedProperties.has(nameof<GpuMonitor>('gpuLoad')) && this.gpuTotalMemory >= 0) {
+		if (_changedProperties.has(nameof<GpuMonitor>('gpuLoad')) && this.gpuTotalMemory > 0) {
 			this.updateGpuLoad();
 		}
 
@@ -49,6 +51,7 @@ export class GpuMonitor extends LitElement {
 	private updateGpuLoad() {
 		if (this.gpuLoad < 0 || this.gpuTotalMemory < 0) {
 			this.gpuPercentageText = 'N/A%';
+			this.gpuPercentageBarWidth = '0%';
 			this.gpuFanSpinningDuration = '1s';
 			this.gpuPercentageBarColor = 'green';
 			return;
@@ -57,6 +60,7 @@ export class GpuMonitor extends LitElement {
 		const percentage = toPercentage(this.gpuLoad, this.gpuTotalMemory);
 		this.gpuFanSpinningDuration = `${calculateAnimationDurationFromPercentage(percentage)}s`;
 		this.gpuPercentageText = `${percentage.toFixed(1)}%`;
+		this.gpuPercentageBarWidth = `${percentage}%`;
 		this.gpuPercentageBarColor = calculateColorFromPercentage(percentage);
 	}
 
@@ -97,7 +101,7 @@ export class GpuMonitor extends LitElement {
 					${this.gpuName}
 				</div>
 				<percentage-monitor-bar
-					barWidth=${this.gpuPercentageText}
+					barWidth=${this.gpuPercentageBarWidth}
 					barBackgroundColor=${this.gpuTemperatureBarColor}
 					progressText=${this.gpuPercentageText}
 					style="width:100%;"

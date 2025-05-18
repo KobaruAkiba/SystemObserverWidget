@@ -17,10 +17,8 @@ declare global {
 				getMotherboardBiosVersion: () => Promise<string>;
 			};
 			ram: {
-				setMemoryLoad: (
-					ramPercentageElement: HTMLElement,
-					ramPercentageBarElement: HTMLElement
-				) => Promise<void>;
+				getMemoryLoad: () => Promise<number>;
+				getTotalMemory: () => Promise<number>;
 				getMemoryBanksLayout: () => Promise<string>;
 			};
 			getOsInfo: () => Promise<{ distro: string; arch: string }>;

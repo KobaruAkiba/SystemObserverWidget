@@ -19,6 +19,7 @@ export class CpuMonitor extends LitElement {
 	@state() cpuName = '...';
 	@state() cpuPercentageText = '...%';
 	@state() cpuFanSpinningDuration = '1s';
+	@state() cpuPercentageBarWidth = '0%';
 	@state() cpuPercentageBarColor = 'green';
 
 	@state() cpuTemperatureText = '...°C';
@@ -39,12 +40,14 @@ export class CpuMonitor extends LitElement {
 		if (this.cpuLoad < 0) {
 			this.cpuPercentageText = 'N/A%';
 			this.cpuFanSpinningDuration = '1s';
+			this.cpuPercentageBarWidth = '0%';
 			this.cpuPercentageBarColor = 'green';
 			return;
 		}
 
 		this.cpuPercentageText = `${this.cpuLoad.toFixed(1)}%`;
 		this.cpuFanSpinningDuration = `${calculateAnimationDurationFromPercentage(this.cpuLoad)}s`;
+		this.cpuPercentageBarWidth = `${this.cpuLoad}%`;
 		this.cpuPercentageBarColor = calculateColorFromPercentage(this.cpuLoad);
 	}
 
@@ -72,7 +75,7 @@ export class CpuMonitor extends LitElement {
 						${this.cpuName}
 					</div>
 					<percentage-monitor-bar
-						barWidth=${this.cpuPercentageText}
+						barWidth=${this.cpuPercentageBarWidth}
 						barBackgroundColor=${this.cpuPercentageBarColor}
 						progressText=${this.cpuPercentageText}
 						style="width: 100%;"

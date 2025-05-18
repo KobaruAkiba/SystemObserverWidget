@@ -9,7 +9,7 @@ import {
 } from './Renderers/gpuRenderer.js';
 import { getOsInfo } from './Renderers/extraRenderers.js';
 import { getMotherboardBiosVersion, getMotherboardName } from './Renderers/motherboardRenderer.js';
-import { getMemoryBanksLayout, setMemoryLoad } from './Renderers/ramRenderer.js';
+import { getMemoryBanksLayout, getMemoryLoad, getTotalMemory } from './Renderers/ramRenderer.js';
 
 contextBridge.exposeInMainWorld('sow', {
 	cpu: {
@@ -28,8 +28,8 @@ contextBridge.exposeInMainWorld('sow', {
 		getMotherboardBiosVersion: () => getMotherboardBiosVersion(),
 	},
 	ram: {
-		setMemoryLoad: (ramPercentageElement: HTMLElement, ramPercentageBarElement: HTMLElement) =>
-			setMemoryLoad(ramPercentageElement, ramPercentageBarElement),
+		getMemoryLoad: () => getMemoryLoad(),
+		getTotalMemory: () => getTotalMemory(),
 		getMemoryBanksLayout: () => getMemoryBanksLayout(),
 	},
 	getOsInfo: () => getOsInfo(),

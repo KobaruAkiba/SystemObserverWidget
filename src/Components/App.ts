@@ -24,6 +24,7 @@ export class App extends LitElement {
 		cpu.getCpuLoad().then((response) => (this.cpuLoad = response));
 		gpu.getGpuMemoryLoad().then((response) => (this.gpuLoad = response));
 		gpu.getGpuLoadTemperature().then((response) => (this.gpuTemperature = response));
+		ram.getMemoryLoad().then((response) => (this.ramLoad = response));
 	};
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
@@ -51,7 +52,7 @@ export class App extends LitElement {
 					gpuTemperature=${this.gpuTemperature}
 				>
 				</gpu-monitor>
-				<ram-monitor></ram-monitor>
+				<ram-monitor memoryLoad=${this.ramLoad}></ram-monitor>
 				<motherboard-monitor></motherboard-monitor>
 				<operative-monitor></operative-monitor>
 			</div>

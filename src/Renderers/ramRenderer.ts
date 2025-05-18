@@ -26,6 +26,24 @@ export const setMemoryLoad = async (
 		})
 		.catch((error) => console.error('Error fetching memory load:', error));
 
+export const getMemoryLoad = async () =>
+	si
+		.mem()
+		.then((data) => data.used || -1)
+		.catch((error) => {
+			console.error('Error fetching RAM data: ', error);
+			return -1;
+		});
+
+export const getTotalMemory = async () =>
+	si
+		.mem()
+		.then((data) => data.total || -1)
+		.catch((error) => {
+			console.error('Error fetching RAM data: ', error);
+			return -1;
+		});
+
 /**
  * Gets the memory banks information.
  */
