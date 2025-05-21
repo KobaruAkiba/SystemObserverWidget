@@ -19,15 +19,16 @@ export class App extends LitElement {
 	@state() ramLoad: number = 0;
 
 	private handleClick = () => window.sow.minimize();
-	private updateStates = () => {
+
+	private updateStates = async () => {
 		const { cpu, gpu, ram } = window.sow;
-		cpu.getCpuLoad().then((response) => (this.cpuLoad = response));
-		gpu.getGpuMemoryLoad().then((response) => (this.gpuLoad = response));
-		gpu.getGpuLoadTemperature().then((response) => (this.gpuTemperature = response));
-		ram.getMemoryLoad().then((response) => (this.ramLoad = response));
+		await cpu.getCpuLoad().then((response) => (this.cpuLoad = response));
+		await gpu.getGpuMemoryLoad().then((response) => (this.gpuLoad = response));
+		await gpu.getGpuLoadTemperature().then((response) => (this.gpuTemperature = response));
+		await ram.getMemoryLoad().then((response) => (this.ramLoad = response));
 	};
 
-	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
+	protected firstUpdated(_changedProperties: PropertyValues): void {
 		setInterval(this.updateStates, 3000);
 	}
 

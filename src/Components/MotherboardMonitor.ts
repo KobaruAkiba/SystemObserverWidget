@@ -14,11 +14,11 @@ export class MotherboardMonitor extends LitElement {
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { mb } = window.sow;
-		mb.getMotherboardName().then((response) => {
+		await mb.getMotherboardName().then((response) => {
 			this.mbManufacturer = response.manufacturer;
 			this.mbModel = response.model;
 		});
-		mb.getMotherboardBiosVersion().then((response) => (this.mbBios = response));
+		await mb.getMotherboardBiosVersion().then((response) => (this.mbBios = response));
 	}
 
 	render() {

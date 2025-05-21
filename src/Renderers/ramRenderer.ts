@@ -1,31 +1,9 @@
 import si from 'systeminformation';
-import { calculateColorFromPercentage } from '../Utils/styling';
-import { toBytes } from '../Utils/numbers';
+import { fromMemoryType, MemoryTypes } from '../Utils/ram';
 
 /**
- * Sets the memory load to the provided elements.
+ * Gets current memory load.
  */
-export const setMemoryLoad = async (
-	ramPercentageElement: HTMLElement,
-	ramPercentageBarElement: HTMLElement
-) =>
-	si
-		.mem()
-		.then((data) => {
-			if (!data) {
-				ramPercentageElement.textContent = 'N/A';
-				ramPercentageBarElement.style.width = '0%';
-				return;
-			}
-
-			const usedMemoryPercentage = (data.used / data.total) * 100;
-			ramPercentageElement.textContent = `${usedMemoryPercentage.toFixed(1)}%`;
-			ramPercentageBarElement.style.width = `${usedMemoryPercentage}%`;
-			ramPercentageBarElement.style.backgroundColor =
-				calculateColorFromPercentage(usedMemoryPercentage);
-		})
-		.catch((error) => console.error('Error fetching memory load:', error));
-
 export const getMemoryLoad = async () =>
 	si
 		.mem()
@@ -35,6 +13,9 @@ export const getMemoryLoad = async () =>
 			return -1;
 		});
 
+/**
+ * Gets total memory.
+ */
 export const getTotalMemory = async () =>
 	si
 		.mem()
@@ -55,16 +36,21 @@ export const getMemoryBanksLayout = async () =>
 				return 'N/A';
 			}
 
-			let memoriesText = '';
-			data.map((bank, index, total) => {
-				if (index === total.length - 1) {
-					memoriesText += `| ${bank.type} ${toBytes(bank.size, 'GB')} GB |`;
-				} else {
-					memoriesText += `| ${bank.type} ${toBytes(bank.size, 'GB')} GB | + `;
+			let ddr3 = 0;
+			let ddr4 = 0;
+			let ddr5 = 0;
+
+			data.map((bank) => {
+				if (bank.type === fromMemoryType(MemoryTypes.DDR3)) {
+					ddr3++;
+				} else if (bank.type === fromMemoryType(MemoryTypes.DDR4)) {
+					ddr4++;
+				} else if (bank.type === fromMemoryType(MemoryTypes.DDR5)) {
+					ddr5;
 				}
 			});
 
-			return memoriesText;
+			return `${!!ddr5 ? `${ddr5} DDR5` : ''}${!!ddr4 ? ` ${ddr4} DDR4` : ''}${!!ddr3 ? ` ${ddr3} DDR3` : ''}`;
 		})
 		.catch((error) => {
 			console.error('Error fetching memory banks:', error);

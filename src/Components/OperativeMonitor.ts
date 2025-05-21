@@ -12,7 +12,7 @@ export class OperativeMonitor extends LitElement {
 	@state() osArch = '...';
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
-		window.sow.getOsInfo().then((response) => {
+		await window.sow.getOsInfo().then((response) => {
 			this.osDistro = response.distro;
 			this.osArch = response.arch;
 		});

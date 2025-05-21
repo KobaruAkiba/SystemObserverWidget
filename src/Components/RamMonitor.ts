@@ -1,8 +1,9 @@
 import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import './PercentageMonitorBar';
-import { nameof } from 'src/Utils/types';
-import { calculateColorFromPercentage } from 'src/Utils/styling';
+import { nameof } from '../Utils/types';
+import { calculateColorFromPercentage } from '../Utils/styling';
+import { toBytes } from '../Utils/numbers';
 
 @customElement('ram-monitor')
 export class RamMonitor extends LitElement {
@@ -20,10 +21,15 @@ export class RamMonitor extends LitElement {
 	@state() memoryPercentageBarWidth = '0%';
 	@state() memoryPercentageBarColor = 'green';
 
-	protected firstUpdated(_changedProperties: PropertyValues): void {
+	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { ram } = window.sow;
-		ram.getMemoryBanksLayout().then((response) => (this.memoryBanksLayout = response));
-		ram.getTotalMemory().then((response) => (this.totalMemory = response));
+		await ram.getTotalMemory().then((response) => (this.totalMemory = response));
+		await ram
+			.getMemoryBanksLayout()
+			.then(
+				(response) =>
+					(this.memoryBanksLayout = `${response}, ${toBytes(this.totalMemory, 'GB').toFixed(1)} GB`)
+			);
 	}
 
 	protected willUpdate(_changedProperties: PropertyValues): void {

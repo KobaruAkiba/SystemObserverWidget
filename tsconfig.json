@@ -15,8 +15,7 @@
 		"useDefineForClassFields": false,
 		"baseUrl": ".",
 		"paths": {
-			"@kobaru/eslint-prettier-config": ["node_modules/@kobaru/eslint-prettier-config"],
-			"@styles/*": ["static/*"]
+			"@kobaru/eslint-prettier-config": ["node_modules/@kobaru/eslint-prettier-config"]
 		}
 	},
 	"include": ["src/**/*"],

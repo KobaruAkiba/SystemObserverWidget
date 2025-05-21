@@ -4,8 +4,8 @@ import './MonitorSpinningIcon';
 import {
 	calculateAnimationDurationFromPercentage,
 	calculateColorFromPercentage,
-} from 'src/Utils/styling';
-import { nameof } from 'src/Utils/types';
+} from '../Utils/styling';
+import { nameof } from '../Utils/types';
 
 @customElement('cpu-monitor')
 export class CpuMonitor extends LitElement {
@@ -24,9 +24,9 @@ export class CpuMonitor extends LitElement {
 
 	@state() cpuTemperatureText = '...°C';
 
-	protected firstUpdated(_changedProperties: PropertyValues): void {
+	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { cpu } = window.sow;
-		cpu.getCpuName().then((response) => (this.cpuName = response));
+		await cpu.getCpuName().then((response) => (this.cpuName = response));
 		this.cpuTemperatureText = `${cpu.getCpuTemperature()}°C`;
 	}
 

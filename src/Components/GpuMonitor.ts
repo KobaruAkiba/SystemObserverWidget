@@ -2,12 +2,12 @@ import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import './MonitorSpinningIcon';
 import './PercentageMonitorBar';
-import { nameof } from 'src/Utils/types';
-import { toPercentage } from 'src/Utils/numbers';
+import { nameof } from '../Utils/types';
+import { toPercentage } from '../Utils/numbers';
 import {
 	calculateAnimationDurationFromPercentage,
 	calculateColorFromPercentage,
-} from 'src/Utils/styling';
+} from '../Utils/styling';
 
 @customElement('gpu-monitor')
 export class GpuMonitor extends LitElement {
@@ -32,10 +32,10 @@ export class GpuMonitor extends LitElement {
 	@state() gpuTemperatureBarWidth = '0%';
 	@state() gpuTemperatureBarColor = 'green';
 
-	protected firstUpdated(_changedProperties: PropertyValues): void {
+	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { gpu } = window.sow;
-		gpu.getGpuName().then((response) => (this.gpuName = response));
-		gpu.getGpuTotalMemory().then((response) => (this.gpuTotalMemory = response));
+		await gpu.getGpuName().then((response) => (this.gpuName = response));
+		await gpu.getGpuTotalMemory().then((response) => (this.gpuTotalMemory = response));
 	}
 
 	protected willUpdate(_changedProperties: PropertyValues): void {
