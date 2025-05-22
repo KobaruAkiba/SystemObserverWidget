@@ -102,7 +102,7 @@ export class GpuMonitor extends LitElement {
 				</div>
 				<percentage-monitor-bar
 					barWidth=${this.gpuPercentageBarWidth}
-					barBackgroundColor=${this.gpuTemperatureBarColor}
+					barBackgroundColor=${this.gpuPercentageBarColor}
 					progressText=${this.gpuPercentageText}
 					style="width:100%;"
 				>

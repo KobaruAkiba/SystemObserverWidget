@@ -1,3 +1,4 @@
+import { notAvailableData, notAvailableText } from '../Utils/notAvailable';
 import si from 'systeminformation';
 
 /**
@@ -7,11 +8,11 @@ export const getCpuName = async () =>
 	await si
 		.cpu()
 		.then((cpuData) => {
-			return cpuData.manufacturer + ' ' + cpuData.brand || 'N/A';
+			return cpuData.manufacturer + ' ' + cpuData.brand || notAvailableText;
 		})
 		.catch((error) => {
 			console.error('Error fetching CPU data:', error);
-			return 'N/A';
+			return notAvailableText;
 		});
 
 /**
@@ -20,10 +21,10 @@ export const getCpuName = async () =>
 export const getCpuLoad = async () =>
 	await si
 		.currentLoad()
-		.then((cpuData) => (cpuData ? cpuData.currentLoad : -1))
+		.then((cpuData) => (cpuData ? cpuData.currentLoad : notAvailableData))
 		.catch((error) => {
 			console.error('Error fetching current load data: ', error);
-			return -1;
+			return notAvailableData;
 		});
 
 /**
@@ -31,5 +32,5 @@ export const getCpuLoad = async () =>
  */
 export const getCpuTemperature = () => {
 	// TODO: implementare il recupero della temperatura della CPU
-	return 'N/A';
+	return notAvailableText;
 };

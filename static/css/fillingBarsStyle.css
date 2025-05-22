@@ -17,6 +17,11 @@
 	display: flex;
 }
 
+.disabled-bar {
+	width: 100%;
+	background-image: repeating-linear-gradient(135deg, black, transparent 8px);
+}
+
 .filling-bar-usage-number {
 	position: absolute;
 	right: 8px;

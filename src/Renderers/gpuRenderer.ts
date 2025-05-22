@@ -1,5 +1,6 @@
 import si from 'systeminformation';
 import { getGpuMemoryUsage, getGpuTemperature } from '../Utils/gpuInfo';
+import { notAvailableData, notAvailableText } from '../Utils/notAvailable';
 
 /**
  * Gets the gpu name.
@@ -8,11 +9,11 @@ export const getGpuName = async () =>
 	await si
 		.graphics()
 		.then((gpuData) => {
-			return gpuData.controllers[0].model || 'N/A';
+			return gpuData.controllers[0].model || notAvailableText;
 		})
 		.catch((error) => {
 			console.error('Error fetching GPU data: ', error);
-			return 'N/A';
+			return notAvailableText;
 		});
 
 /**
@@ -20,10 +21,10 @@ export const getGpuName = async () =>
  */
 export const getGpuMemoryLoad = async () =>
 	await getGpuMemoryUsage()
-		.then((data) => data?.used || -1)
+		.then((data) => data?.used || notAvailableData)
 		.catch((error) => {
 			console.error('Error fetching GPU memory data: ', error);
-			return -1;
+			return notAvailableData;
 		});
 
 /**
@@ -31,10 +32,10 @@ export const getGpuMemoryLoad = async () =>
  */
 export const getGpuTotalMemory = async () =>
 	await getGpuMemoryUsage()
-		.then((data) => data?.total || -1)
+		.then((data) => data?.total || notAvailableData)
 		.catch((error) => {
 			console.error('Error fetching GPU total memory: ', error);
-			return -1;
+			return notAvailableData;
 		});
 
 /**
@@ -42,9 +43,9 @@ export const getGpuTotalMemory = async () =>
  */
 export const getGpuLoadTemperature = async () =>
 	await getGpuTemperature()
-		.then((data) => data || -1)
+		.then((data) => data || notAvailableData)
 		.catch((error) => {
 			console.error('Error fetching GPU temperature data: ', error);
-			return -1;
+			return notAvailableData;
 		});
 

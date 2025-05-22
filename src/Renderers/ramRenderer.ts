@@ -1,5 +1,6 @@
 import si from 'systeminformation';
 import { fromMemoryType, MemoryTypes } from '../Utils/ram';
+import { notAvailableData, notAvailableText } from '../Utils/notAvailable';
 
 /**
  * Gets current memory load.
@@ -7,10 +8,10 @@ import { fromMemoryType, MemoryTypes } from '../Utils/ram';
 export const getMemoryLoad = async () =>
 	si
 		.mem()
-		.then((data) => data.used || -1)
+		.then((data) => data.used || notAvailableData)
 		.catch((error) => {
 			console.error('Error fetching RAM data: ', error);
-			return -1;
+			return notAvailableData;
 		});
 
 /**
@@ -19,10 +20,10 @@ export const getMemoryLoad = async () =>
 export const getTotalMemory = async () =>
 	si
 		.mem()
-		.then((data) => data.total || -1)
+		.then((data) => data.total || notAvailableData)
 		.catch((error) => {
 			console.error('Error fetching RAM data: ', error);
-			return -1;
+			return notAvailableData;
 		});
 
 /**
@@ -33,7 +34,7 @@ export const getMemoryBanksLayout = async () =>
 		.memLayout()
 		.then((data) => {
 			if (!data || data.length === 0) {
-				return 'N/A';
+				return notAvailableText;
 			}
 
 			let ddr3 = 0;
@@ -54,6 +55,6 @@ export const getMemoryBanksLayout = async () =>
 		})
 		.catch((error) => {
 			console.error('Error fetching memory banks:', error);
-			return 'N/A';
+			return notAvailableText;
 		});
 

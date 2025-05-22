@@ -6,6 +6,7 @@ import {
 	calculateColorFromPercentage,
 } from '../Utils/styling';
 import { nameof } from '../Utils/types';
+import { isNotAvailableText } from '../Utils/notAvailable';
 
 @customElement('cpu-monitor')
 export class CpuMonitor extends LitElement {
@@ -85,6 +86,7 @@ export class CpuMonitor extends LitElement {
 						barWidth="0%"
 						barBackgroundColor="green"
 						progressText=${this.cpuTemperatureText}
+						?isdisabled=${isNotAvailableText(this.cpuTemperatureText.substring(0, 3))}
 						style="width: 100%;"
 					>
 					</percentage-monitor-bar>
