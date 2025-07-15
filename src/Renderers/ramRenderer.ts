@@ -1,6 +1,6 @@
 import si from 'systeminformation';
 import { fromMemoryType, MemoryTypes } from '../Utils/ram';
-import { notAvailableData, notAvailableText } from '../Utils/notAvailable';
+import { notAvailableData, loadingStrings } from '../Utils/notAvailable';
 
 /**
  * Gets current memory load.
@@ -8,7 +8,7 @@ import { notAvailableData, notAvailableText } from '../Utils/notAvailable';
 export const getMemoryLoad = async () =>
 	si
 		.mem()
-		.then((data) => data.used || notAvailableData)
+		.then((data) => data?.used || notAvailableData)
 		.catch((error) => {
 			console.error('Error fetching RAM data: ', error);
 			return notAvailableData;
@@ -20,7 +20,7 @@ export const getMemoryLoad = async () =>
 export const getTotalMemory = async () =>
 	si
 		.mem()
-		.then((data) => data.total || notAvailableData)
+		.then((data) => data?.total || notAvailableData)
 		.catch((error) => {
 			console.error('Error fetching RAM data: ', error);
 			return notAvailableData;
@@ -34,7 +34,7 @@ export const getMemoryBanksLayout = async () =>
 		.memLayout()
 		.then((data) => {
 			if (!data || data.length === 0) {
-				return notAvailableText;
+				return loadingStrings.NotAvailable;
 			}
 
 			let ddr3 = 0;
@@ -55,6 +55,6 @@ export const getMemoryBanksLayout = async () =>
 		})
 		.catch((error) => {
 			console.error('Error fetching memory banks:', error);
-			return notAvailableText;
+			return loadingStrings.NotAvailable;
 		});
 

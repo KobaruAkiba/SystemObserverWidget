@@ -1,4 +1,4 @@
-import { notAvailableText } from '../Utils/notAvailable';
+import { loadingStrings } from '../Utils/notAvailable';
 import si from 'systeminformation';
 
 /**
@@ -9,15 +9,15 @@ export const getMotherboardName = async () =>
 		.baseboard()
 		.then((data) => {
 			return {
-				manufacturer: data.manufacturer || notAvailableText,
-				model: data.model || notAvailableText,
+				manufacturer: data?.manufacturer || loadingStrings.NotAvailable,
+				model: data?.model || loadingStrings.NotAvailable,
 			};
 		})
 		.catch((error) => {
 			console.error('Error fetching baseboard info:', error);
 			return {
-				manufacturer: notAvailableText,
-				model: notAvailableText,
+				manufacturer: loadingStrings.NotAvailable,
+				model: loadingStrings.NotAvailable,
 			};
 		});
 
@@ -28,10 +28,12 @@ export const getMotherboardBiosVersion = async () =>
 	si
 		.bios()
 		.then((data) => {
-			return `${data.vendor} v.${data.version}` || notAvailableText;
+			return data?.vendor && data?.version
+				? `${data.vendor} v.${data.version}`
+				: loadingStrings.NotAvailable;
 		})
 		.catch((error) => {
 			console.error('Error fetching BIOS info:', error);
-			return notAvailableText;
+			return loadingStrings.NotAvailable;
 		});
 

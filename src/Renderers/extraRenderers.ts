@@ -1,4 +1,4 @@
-import { notAvailableText } from '../Utils/notAvailable';
+import { loadingStrings } from '../Utils/notAvailable';
 import si from 'systeminformation';
 
 /**
@@ -9,15 +9,15 @@ export const getOsInfo = async () =>
 		.osInfo()
 		.then((data) => {
 			return {
-				distro: data.distro || notAvailableText,
-				arch: data.arch || notAvailableText,
+				distro: data?.distro || loadingStrings.NotAvailable,
+				arch: data?.arch || loadingStrings.NotAvailable,
 			};
 		})
 		.catch((error) => {
 			console.error('Error fetching OS info:', error);
 			return {
-				distro: notAvailableText,
-				arch: notAvailableText,
+				distro: loadingStrings.NotAvailable,
+				arch: loadingStrings.NotAvailable,
 			};
 		});
 

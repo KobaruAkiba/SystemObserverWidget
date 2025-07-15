@@ -1,6 +1,6 @@
 import si from 'systeminformation';
 import { getGpuMemoryUsage, getGpuTemperature } from '../Utils/gpuInfo';
-import { notAvailableData, notAvailableText } from '../Utils/notAvailable';
+import { loadingStrings, notAvailableData } from '../Utils/notAvailable';
 
 /**
  * Gets the gpu name.
@@ -9,11 +9,11 @@ export const getGpuName = async () =>
 	await si
 		.graphics()
 		.then((gpuData) => {
-			return gpuData.controllers[0].model || notAvailableText;
+			return gpuData?.controllers[0]?.model || loadingStrings.NotAvailable;
 		})
 		.catch((error) => {
 			console.error('Error fetching GPU data: ', error);
-			return notAvailableText;
+			return loadingStrings.NotAvailable;
 		});
 
 /**
