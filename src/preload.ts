@@ -1,6 +1,11 @@
 import { contextBridge, ipcRenderer } from 'electron';
 import { ipcEvents } from './Utils/events.js';
-import { getCpuLoad, getCpuName, getCpuTemperature } from './Renderers/cpuRenderer.js';
+import {
+	getCpuLoad,
+	getCpuMaxTemperature,
+	getCpuName,
+	getCpuTemperature,
+} from './Renderers/cpuRenderer.js';
 import {
 	getGpuName,
 	getGpuMemoryLoad,
@@ -16,6 +21,7 @@ contextBridge.exposeInMainWorld('sow', {
 		getCpuName: () => getCpuName(),
 		getCpuLoad: () => getCpuLoad(),
 		getCpuTemperature: () => getCpuTemperature(),
+		getCpuMaxTemperature: () => getCpuMaxTemperature(),
 	},
 	gpu: {
 		getGpuName: () => getGpuName(),

@@ -4,7 +4,8 @@ declare global {
 			cpu: {
 				getCpuName: () => Promise<string>;
 				getCpuLoad: () => Promise<number>;
-				getCpuTemperature: () => string;
+				getCpuTemperature: () => Promise<number>;
+				getCpuMaxTemperature: () => Promise<number>;
 			};
 			gpu: {
 				getGpuName: () => Promise<string>;
