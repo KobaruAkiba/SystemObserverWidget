@@ -21,7 +21,3 @@ export const getOsInfo = async () =>
 			};
 		});
 
-si.getAllData().then((data) => {
-	console.log('System Information:', data);
-});
-
