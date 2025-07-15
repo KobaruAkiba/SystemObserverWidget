@@ -7,7 +7,9 @@ import { toPercentage } from '../Utils/numbers';
 import {
 	calculateAnimationDurationFromPercentage,
 	calculateColorFromPercentage,
+	StyleColors,
 } from '../Utils/styling';
+import { loadingStrings } from '../Utils/notAvailable';
 
 @customElement('gpu-monitor')
 export class GpuMonitor extends LitElement {
@@ -20,17 +22,17 @@ export class GpuMonitor extends LitElement {
 	@property({ type: Number }) gpuTemperature = 0;
 
 	gpuTotalMemory = 0;
-	gpuCriticalTemperature = 82; // Assuming 82°C is the max temperature
+	gpuCriticalTemperature = 99; // Assuming 99°C is the max temperature
 
-	@state() gpuName = '...';
-	@state() gpuPercentageText = '...%';
+	@state() gpuName = loadingStrings.Dots;
+	@state() gpuPercentageText = `${loadingStrings.Dots}%`;
 	@state() gpuFanSpinningDuration = '1s';
 	@state() gpuPercentageBarWidth = '0%';
-	@state() gpuPercentageBarColor = 'green';
+	@state() gpuPercentageBarColor = StyleColors.GREEN;
 
-	@state() gpuTemperatureText = '...°C';
+	@state() gpuTemperatureText = `${loadingStrings.Dots}°C`;
 	@state() gpuTemperatureBarWidth = '0%';
-	@state() gpuTemperatureBarColor = 'green';
+	@state() gpuTemperatureBarColor = StyleColors.GREEN;
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { gpu } = window.sow;
@@ -39,21 +41,32 @@ export class GpuMonitor extends LitElement {
 	}
 
 	protected willUpdate(_changedProperties: PropertyValues): void {
-		if (_changedProperties.has(nameof<GpuMonitor>('gpuLoad')) && this.gpuTotalMemory > 0) {
+		console.log('gpu% ', this.gpuPercentageText);
+		console.log('gpu° ', this.gpuTemperatureText);
+
+		if (
+			_changedProperties.has(nameof<GpuMonitor>('gpuLoad')) &&
+			_changedProperties.get(nameof<GpuMonitor>('gpuLoad')) !== this.gpuLoad &&
+			this.gpuLoad !== 0 // wait for the first tick to update
+		) {
 			this.updateGpuLoad();
 		}
 
-		if (_changedProperties.has(nameof<GpuMonitor>('gpuTemperature'))) {
+		if (
+			_changedProperties.has(nameof<GpuMonitor>('gpuTemperature')) &&
+			_changedProperties.get(nameof<GpuMonitor>('gpuTemperature')) !== this.gpuTemperature &&
+			this.gpuTemperature !== 0 // wait for the first tick to update
+		) {
 			this.updateGpuTemperature();
 		}
 	}
 
 	private updateGpuLoad() {
 		if (this.gpuLoad < 0 || this.gpuTotalMemory < 0) {
-			this.gpuPercentageText = 'N/A%';
+			this.gpuPercentageText = `${loadingStrings.NotAvailable}%`;
 			this.gpuPercentageBarWidth = '0%';
 			this.gpuFanSpinningDuration = '1s';
-			this.gpuPercentageBarColor = 'green';
+			this.gpuPercentageBarColor = StyleColors.GREEN;
 			return;
 		}
 
@@ -66,9 +79,9 @@ export class GpuMonitor extends LitElement {
 
 	private updateGpuTemperature() {
 		if (this.gpuTemperature < 0) {
-			this.gpuTemperatureText = 'N/A°C';
+			this.gpuTemperatureText = `${loadingStrings.NotAvailable}°C`;
 			this.gpuTemperatureBarWidth = '0%';
-			this.gpuTemperatureBarColor = 'green';
+			this.gpuTemperatureBarColor = StyleColors.GREEN;
 			return;
 		}
 
@@ -104,6 +117,7 @@ export class GpuMonitor extends LitElement {
 					barWidth=${this.gpuPercentageBarWidth}
 					barBackgroundColor=${this.gpuPercentageBarColor}
 					progressText=${this.gpuPercentageText}
+					?isDisabled=${this.gpuLoad < 0}
 					style="width:100%;"
 				>
 				</percentage-monitor-bar>
@@ -111,6 +125,7 @@ export class GpuMonitor extends LitElement {
 					barWidth=${this.gpuTemperatureBarWidth}
 					barBackgroundColor=${this.gpuTemperatureBarColor}
 					progressText=${this.gpuTemperatureText}
+					?isDisabled=${this.gpuTemperature < 0}
 					style="width:100%;"
 				>
 				</percentage-monitor-bar>

@@ -4,9 +4,11 @@ import './MonitorSpinningIcon';
 import {
 	calculateAnimationDurationFromPercentage,
 	calculateColorFromPercentage,
+	StyleColors,
 } from '../Utils/styling';
 import { nameof } from '../Utils/types';
-import { isNotAvailableText } from '../Utils/notAvailable';
+import { loadingStrings } from '../Utils/notAvailable';
+import { toPercentage } from '../Utils/numbers';
 
 @customElement('cpu-monitor')
 export class CpuMonitor extends LitElement {
@@ -16,33 +18,52 @@ export class CpuMonitor extends LitElement {
 	}
 
 	@property({ type: Number }) cpuLoad = 0;
+	@property({ type: Number }) cpuTemperature = 0;
 
-	@state() cpuName = '...';
-	@state() cpuPercentageText = '...%';
+	@state() cpuName = loadingStrings.Dots;
+	@state() cpuPercentageText = `${loadingStrings.Dots}%`;
 	@state() cpuFanSpinningDuration = '1s';
 	@state() cpuPercentageBarWidth = '0%';
-	@state() cpuPercentageBarColor = 'green';
+	@state() cpuPercentageBarColor = StyleColors.GREEN;
 
-	@state() cpuTemperatureText = '...°C';
+	@state() cpuTemperatureText = `${loadingStrings.Dots}°C`;
+	@state() cpuMaxTemperature = 0;
+	@state() cpuTemperatureBarWidth = '0%';
+	@state() cpuTemperatureBarColor = StyleColors.GREEN;
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { cpu } = window.sow;
 		await cpu.getCpuName().then((response) => (this.cpuName = response));
-		this.cpuTemperatureText = `${cpu.getCpuTemperature()}°C`;
+		await cpu.getCpuMaxTemperature().then((response) => (this.cpuMaxTemperature = response));
 	}
 
 	protected willUpdate(_changedProperties: PropertyValues): void {
-		if (_changedProperties.has(nameof<CpuMonitor>('cpuLoad'))) {
+		console.log('cpu% ', this.cpuPercentageText);
+		console.log('cpu° ', this.cpuTemperatureText);
+
+		if (
+			_changedProperties.has(nameof<CpuMonitor>('cpuLoad')) &&
+			_changedProperties.get(nameof<CpuMonitor>('cpuLoad')) !== this.cpuLoad &&
+			this.cpuLoad !== 0 // wait for the first tick to update
+		) {
 			this.updateCpuLoad();
+		}
+
+		if (
+			_changedProperties.has(nameof<CpuMonitor>('cpuTemperature')) &&
+			_changedProperties.get(nameof<CpuMonitor>('cpuTemperature')) !== this.cpuTemperature &&
+			this.cpuTemperature !== 0 // wait for the first tick to update
+		) {
+			this.updateCpuTemperature();
 		}
 	}
 
 	private updateCpuLoad(): void {
 		if (this.cpuLoad < 0) {
-			this.cpuPercentageText = 'N/A%';
+			this.cpuPercentageText = `${loadingStrings.NotAvailable}%`;
 			this.cpuFanSpinningDuration = '1s';
 			this.cpuPercentageBarWidth = '0%';
-			this.cpuPercentageBarColor = 'green';
+			this.cpuPercentageBarColor = StyleColors.GREEN;
 			return;
 		}
 
@@ -50,6 +71,20 @@ export class CpuMonitor extends LitElement {
 		this.cpuFanSpinningDuration = `${calculateAnimationDurationFromPercentage(this.cpuLoad)}s`;
 		this.cpuPercentageBarWidth = `${this.cpuLoad}%`;
 		this.cpuPercentageBarColor = calculateColorFromPercentage(this.cpuLoad);
+	}
+
+	private updateCpuTemperature(): void {
+		if (this.cpuTemperature < 0 || this.cpuMaxTemperature < 0) {
+			this.cpuTemperatureText = `${loadingStrings.NotAvailable}%`;
+			this.cpuTemperatureBarWidth = '0%';
+			this.cpuTemperatureBarColor = StyleColors.GREEN;
+			return;
+		}
+
+		const tempPercentage = toPercentage(this.cpuTemperature, this.cpuMaxTemperature);
+		this.cpuTemperatureText = `${this.cpuTemperature.toFixed(1)}%`;
+		this.cpuTemperatureBarWidth = `${tempPercentage}%`;
+		this.cpuTemperatureBarColor = calculateColorFromPercentage(tempPercentage);
 	}
 
 	render() {
@@ -79,14 +114,15 @@ export class CpuMonitor extends LitElement {
 						barWidth=${this.cpuPercentageBarWidth}
 						barBackgroundColor=${this.cpuPercentageBarColor}
 						progressText=${this.cpuPercentageText}
+						?isDisabled=${this.cpuLoad < 0}
 						style="width: 100%;"
 					>
 					</percentage-monitor-bar>
 					<percentage-monitor-bar
-						barWidth="0%"
-						barBackgroundColor="green"
+						barWidth=${this.cpuTemperatureBarWidth}
+						barBackgroundColor=${this.cpuTemperatureBarColor}
 						progressText=${this.cpuTemperatureText}
-						?isdisabled=${isNotAvailableText(this.cpuTemperatureText.substring(0, 3))}
+						?isdisabled=${this.cpuMaxTemperature < 0}
 						style="width: 100%;"
 					>
 					</percentage-monitor-bar>

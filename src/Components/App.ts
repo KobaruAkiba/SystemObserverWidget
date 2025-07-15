@@ -14,6 +14,7 @@ export class App extends LitElement {
 	}
 
 	@state() cpuLoad: number = 0;
+	@state() cpuTemperature: number = 0;
 	@state() gpuLoad: number = 0;
 	@state() gpuTemperature: number = 0;
 	@state() ramLoad: number = 0;
@@ -21,8 +22,10 @@ export class App extends LitElement {
 	private handleClick = () => window.sow.minimize();
 
 	private updateStates = async () => {
+		// TODO: find a way to optimize not successfull calls (timeout after number of tries?)
 		const { cpu, gpu, ram } = window.sow;
 		await cpu.getCpuLoad().then((response) => (this.cpuLoad = response));
+		await cpu.getCpuTemperature().then((response) => (this.cpuTemperature = response));
 		await gpu.getGpuMemoryLoad().then((response) => (this.gpuLoad = response));
 		await gpu.getGpuLoadTemperature().then((response) => (this.gpuTemperature = response));
 		await ram.getMemoryLoad().then((response) => (this.ramLoad = response));
@@ -47,7 +50,10 @@ export class App extends LitElement {
 				</span>
 			</div>
 			<div class="content">
-				<cpu-monitor cpuLoad=${this.cpuLoad}></cpu-monitor>
+				<cpu-monitor
+					cpuLoad=${this.cpuLoad}
+					cpuTemperature=${this.cpuTemperature}
+				></cpu-monitor>
 				<gpu-monitor
 					gpuLoad=${this.gpuLoad}
 					gpuTemperature=${this.gpuTemperature}

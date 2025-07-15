@@ -1,5 +1,6 @@
 import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { loadingStrings } from '../Utils/notAvailable';
 
 @customElement('operative-monitor')
 export class OperativeMonitor extends LitElement {
@@ -8,8 +9,8 @@ export class OperativeMonitor extends LitElement {
 		return this;
 	}
 
-	@state() osDistro = '...';
-	@state() osArch = '...';
+	@state() osDistro = loadingStrings.Dots;
+	@state() osArch = loadingStrings.Dots;
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		await window.sow.getOsInfo().then((response) => {

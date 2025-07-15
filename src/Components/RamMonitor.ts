@@ -2,8 +2,9 @@ import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 import './PercentageMonitorBar';
 import { nameof } from '../Utils/types';
-import { calculateColorFromPercentage } from '../Utils/styling';
+import { calculateColorFromPercentage, StyleColors } from '../Utils/styling';
 import { toBytes } from '../Utils/numbers';
+import { loadingStrings } from '../Utils/notAvailable';
 
 @customElement('ram-monitor')
 export class RamMonitor extends LitElement {
@@ -16,10 +17,10 @@ export class RamMonitor extends LitElement {
 
 	totalMemory = 0;
 
-	@state() memoryBanksLayout = '...';
-	@state() memoryPercentageText = '...%';
+	@state() memoryBanksLayout = loadingStrings.Dots;
+	@state() memoryPercentageText = `${loadingStrings.Dots}%`;
 	@state() memoryPercentageBarWidth = '0%';
-	@state() memoryPercentageBarColor = 'green';
+	@state() memoryPercentageBarColor = StyleColors.GREEN;
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { ram } = window.sow;
@@ -33,16 +34,20 @@ export class RamMonitor extends LitElement {
 	}
 
 	protected willUpdate(_changedProperties: PropertyValues): void {
-		if (_changedProperties.has(nameof<RamMonitor>('memoryLoad')) && this.totalMemory > 0) {
+		if (
+			_changedProperties.has(nameof<RamMonitor>('memoryLoad')) &&
+			_changedProperties.get(nameof<RamMonitor>('memoryLoad')) !== this.memoryLoad &&
+			this.memoryLoad !== 0 // wait for the first tick to update
+		) {
 			this.updateMemoryLoad();
 		}
 	}
 
 	private updateMemoryLoad() {
 		if (this.memoryLoad < 0) {
-			this.memoryPercentageText = 'N/A%';
+			this.memoryPercentageText = `${loadingStrings.Dots}%`;
 			this.memoryPercentageBarWidth = '0%';
-			this.memoryPercentageBarColor = 'green';
+			this.memoryPercentageBarColor = StyleColors.GREEN;
 			return;
 		}
 
@@ -73,6 +78,7 @@ export class RamMonitor extends LitElement {
 					barWidth=${this.memoryPercentageBarWidth}
 					barBackgroundColor=${this.memoryPercentageBarColor}
 					progressText=${this.memoryPercentageText}
+					?isDisabled=${this.memoryLoad < 0}
 					style="width:100%;"
 				>
 				</percentage-monitor-bar>

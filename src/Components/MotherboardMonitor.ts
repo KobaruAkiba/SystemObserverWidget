@@ -1,5 +1,6 @@
 import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+import { loadingStrings } from '../Utils/notAvailable';
 
 @customElement('motherboard-monitor')
 export class MotherboardMonitor extends LitElement {
@@ -8,9 +9,9 @@ export class MotherboardMonitor extends LitElement {
 		return this;
 	}
 
-	@state() mbManufacturer = '...';
-	@state() mbModel = '...';
-	@state() mbBios = '...';
+	@state() mbManufacturer = loadingStrings.Dots;
+	@state() mbModel = loadingStrings.Dots;
+	@state() mbBios = loadingStrings.Dots;
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { mb } = window.sow;
