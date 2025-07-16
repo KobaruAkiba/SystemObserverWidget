@@ -4,12 +4,10 @@
 @import url('./css/icons.css');
 @import url('./css/gridStyle.css');
 @import url('./css/fillingBarsStyle.css');
-@import url('./css/cpuStyle.css');
-@import url('./css/gpuStyle.css');
 
 :root {
 	--standard-margin: 8px;
-	--icon-responsive-size: clamp(60px, 25vh + 7vw, 120px);
+	--icon-responsive-size: clamp(80px, 4vh + 8vw, 120px);
 
 	--window-backgorund-color: #1e1e1eee;
 }
@@ -21,7 +19,7 @@ body {
 	width: 100%;
 	height: 100%;
 	overflow: hidden;
-	background: rgba(0, 0, 0, 0) !important;
+	background: rgba(0, 0, 0, 0.2) !important;
 	-webkit-app-region: no-drag;
 }
 
@@ -29,10 +27,10 @@ body {
 	width: 4px;
 }
 
-.window {
+.app {
 	font-family: monospace;
 	color: white;
-	font-size: clamp(14px, 2vw + 1vh, 24px);
+	font-size: clamp(14px, 1vw + 1vh, 21px);
 	background: var(--window-backgorund-color);
 	border-radius: 10px;
 	padding: 10px;

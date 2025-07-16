@@ -1,55 +1,58 @@
+import { notAvailableData, loadingStrings } from '../Utils/notAvailable';
 import si from 'systeminformation';
-import {
-	calculateAnimationDurationFromPercentage,
-	calculateColorFromPercentage,
-} from '../Utils/styling';
 
 /**
- * Gets the cpu name and sets it to the cpuName element.
+ * Gets the cpu name.
  */
-export const setCpuName = async (cpuNameElement: HTMLElement) =>
+export const getCpuName = async () =>
 	await si
 		.cpu()
 		.then((cpuData) => {
-			cpuNameElement.textContent = cpuData.manufacturer + ' ' + cpuData.brand || 'N/A';
+			return cpuData?.manufacturer && cpuData?.brand
+				? cpuData.manufacturer + ' ' + cpuData.brand
+				: loadingStrings.NotAvailable;
 		})
-		.catch((error) => console.error('Error fetching CPU data:', error));
+		.catch((error) => {
+			console.error('Error fetching CPU data:', error);
+			return loadingStrings.NotAvailable;
+		});
 
 /**
- * Sets the cpu load to the cpuPercentage element and sets the animation duration of the cpuCircle element.
- * The animation duration is calculated based on the current load of the CPU.
+ * Gets the cpu current load (percentage).
  */
-export const setCpuLoad = async (
-	cpuCircleIcon: HTMLElement,
-	cpuPercentageElement: HTMLElement,
-	cpuPercentageBarElement: HTMLElement
-) =>
+export const getCpuLoad = async () =>
 	await si
 		.currentLoad()
-		.then((cpuData) => {
-			if (!cpuData) {
-				cpuPercentageElement.textContent = 'N/A';
-				cpuPercentageBarElement.style.width = '0%';
-				return;
-			}
-
-			cpuCircleIcon.style.animationDuration = `${calculateAnimationDurationFromPercentage(cpuData.currentLoad)}s`;
-			cpuPercentageElement.textContent = `${cpuData.currentLoad.toFixed(1)}%`;
-			cpuPercentageBarElement.style.width = `${cpuData.currentLoad}%`;
-			cpuPercentageBarElement.style.backgroundColor = calculateColorFromPercentage(
-				cpuData.currentLoad
-			);
-		})
-		.catch((error) => console.error('Error fetching current load data:', error));
+		.then((cpuData) => cpuData?.currentLoad || notAvailableData)
+		.catch((error) => {
+			console.error('Error fetching current load data: ', error);
+			return notAvailableData;
+		});
 
 /**
- * Sets the cpu temperature to the cpuTemperature element.
+ * Gets the cpu current temperature.
  */
-export const setCpuTemperature = (
-	cpuTemperatureElement: HTMLElement,
-	cpuTemperatureBarElement: HTMLElement
-) => {
-	// TODO: implementare il recupero della temperatura della CPU
-	cpuTemperatureElement.textContent = 'N/A °C';
-	cpuTemperatureBarElement.style.width = '0%';
-};
+export const getCpuTemperature = async () =>
+	await si
+		.cpuTemperature()
+		.then((cpuTemp) => {
+			return cpuTemp?.main || notAvailableData;
+		})
+		.catch((error) => {
+			console.error('Error fetching CPU temperature: ', error);
+			return notAvailableData;
+		});
+
+/**
+ * Gets the cpu maximum temperature.
+ */
+export const getCpuMaxTemperature = async () =>
+	await si
+		.cpuTemperature()
+		.then((cpuTemp) => {
+			return cpuTemp?.max || notAvailableData;
+		})
+		.catch((error) => {
+			console.error('Error fetching CPU temperature: ', error);
+			return notAvailableData;
+		});

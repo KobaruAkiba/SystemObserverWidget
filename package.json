@@ -12,9 +12,11 @@
 		"start": "electron-forge start",
 		"make": "electron-forge make",
 		"package": "electron-forge package",
-		"build": "bun build src/main.ts src/preload.ts src/renderer.ts --outdir=dist --target=node --format=cjs --minify",
-		"start-tsc": "bun run copy-all && bun run build-tsc && electron .",
-		"build-tsc": "bun run tsc",
+		"build": "bun build src/main.ts src/preload.ts --outdir=dist --target=node --format=cjs --minify",
+		"start-tsc": "bun run build-tsc && electron .",
+		"build-tsc": "bun run build-main && bun run bundle-components && bun run copy-all",
+		"build-main": "tsc -p tsconfig.json",
+		"bundle-components": "bun build src/Components/**/* --outdir dist/Components --target browser --minify --external:electron",
 		"copy-all": "bun run copy-index && bun run copy-static",
 		"copy-index": "cp src/index.html dist/index.html",
 		"copy-static": "cpx \"static/**/*\" dist"
@@ -36,9 +38,10 @@
 		"prettier": "^3.5.3"
 	},
 	"peerDependencies": {
-		"typescript": "^5.0.0"
+		"typescript": "^5.8.3"
 	},
 	"dependencies": {
+		"lit": "^3.3.0",
 		"systeminformation": "^5.25.11"
 	},
 	"trustedDependencies": [
@@ -46,4 +49,3 @@
 		"unrs-resolver"
 	]
 }
-

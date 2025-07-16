@@ -6,6 +6,7 @@ module.exports = {
     new (require('@electron-forge/maker-zip').default)({
       platforms: ['zip32']
     }),
+    // TODO: project different output for the next release
     // {
     //   name: '@electron-forge/maker-squirrel',
     //   config: {

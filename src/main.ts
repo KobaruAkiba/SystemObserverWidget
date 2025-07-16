@@ -1,6 +1,8 @@
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { join } from 'path';
-import { ipcEvents } from './Utils/events';
+import { ipcEvents } from './Utils/events.js';
+
+const preloadPath = join(__dirname, 'preload.js');
 
 const createWindow = () => {
 	const win = new BrowserWindow({
@@ -14,7 +16,7 @@ const createWindow = () => {
 		roundedCorners: true,
 		alwaysOnTop: true,
 		webPreferences: {
-			preload: join(__dirname, 'preload.js'),
+			preload: preloadPath,
 			nodeIntegration: true,
 			backgroundThrottling: false,
 		},

@@ -1,18 +1,23 @@
+import { loadingStrings } from '../Utils/notAvailable';
 import si from 'systeminformation';
 
 /**
- * Sets the OS information (distro and architecture) to the provided elements.
+ * Gets the OS information (distro and architecture).
  */
-export const setOsInfo = async (osDistroElement: HTMLElement, osArchElement: HTMLElement) =>
+export const getOsInfo = async () =>
 	si
 		.osInfo()
 		.then((data) => {
-			osDistroElement.textContent = data.distro || 'N/A';
-			osArchElement.textContent = data.arch || 'N/A';
+			return {
+				distro: data?.distro || loadingStrings.NotAvailable,
+				arch: data?.arch || loadingStrings.NotAvailable,
+			};
 		})
-		.catch((error) => console.error('Error fetching OS info:', error));
-
-si.getAllData().then((data) => {
-	console.log('System Information:', data);
-});
+		.catch((error) => {
+			console.error('Error fetching OS info:', error);
+			return {
+				distro: loadingStrings.NotAvailable,
+				arch: loadingStrings.NotAvailable,
+			};
+		});
 

@@ -1,44 +1,43 @@
 import { contextBridge, ipcRenderer } from 'electron';
-import { ipcEvents } from './Utils/events';
-import { setCpuLoad, setCpuName, setCpuTemperature } from './Renderers/cpuRenderer';
-import { setGpuMemoryLoad, setGpuName, setGpuTemperature } from './Renderers/gpuRenderer';
-import { setOsInfo } from './Renderers/extraRenderers';
-import { setMotherBoardBiosVersion, setMotherBoardName } from './Renderers/motherboardRenderer';
-import { setMemoryBanks, setMemoryLoad } from './Renderers/ramRenderer';
+import { ipcEvents } from './Utils/events.js';
+import {
+	getCpuLoad,
+	getCpuMaxTemperature,
+	getCpuName,
+	getCpuTemperature,
+} from './Renderers/cpuRenderer.js';
+import {
+	getGpuName,
+	getGpuMemoryLoad,
+	getGpuLoadTemperature,
+	getGpuTotalMemory,
+} from './Renderers/gpuRenderer.js';
+import { getOsInfo } from './Renderers/extraRenderers.js';
+import { getMotherboardBiosVersion, getMotherboardName } from './Renderers/motherboardRenderer.js';
+import { getMemoryBanksLayout, getMemoryLoad, getTotalMemory } from './Renderers/ramRenderer.js';
 
 contextBridge.exposeInMainWorld('sow', {
 	cpu: {
-		setCpuName: (cpuNameElement: HTMLElement) => setCpuName(cpuNameElement),
-		setCpuLoad: (
-			cpuCircleIcon: HTMLElement,
-			cpuPercentageElement: HTMLElement,
-			cpuPercentageBarElement: HTMLElement
-		) => setCpuLoad(cpuCircleIcon, cpuPercentageElement, cpuPercentageBarElement),
-		setCpuTemperature: (cpuTemperatureElement: HTMLElement, cpuTemperatureBarElement: HTMLElement) =>
-			setCpuTemperature(cpuTemperatureElement, cpuTemperatureBarElement),
+		getCpuName: () => getCpuName(),
+		getCpuLoad: () => getCpuLoad(),
+		getCpuTemperature: () => getCpuTemperature(),
+		getCpuMaxTemperature: () => getCpuMaxTemperature(),
 	},
 	gpu: {
-		setGpuName: (gpuNameElement: HTMLElement) => setGpuName(gpuNameElement),
-		setGpuMemoryLoad: (
-			gpuCircleIcon: HTMLElement,
-			gpuPercentageElement: HTMLElement,
-			gpuPercentageBarElement: HTMLElement
-		) => setGpuMemoryLoad(gpuCircleIcon, gpuPercentageElement, gpuPercentageBarElement),
-		setGpuTemperature: (gpuTemperatureElement: HTMLElement, gpuTemperatureBarElement: HTMLElement) =>
-			setGpuTemperature(gpuTemperatureElement, gpuTemperatureBarElement),
+		getGpuName: () => getGpuName(),
+		getGpuMemoryLoad: () => getGpuMemoryLoad(),
+		getGpuTotalMemory: () => getGpuTotalMemory(),
+		getGpuLoadTemperature: () => getGpuLoadTemperature(),
 	},
 	mb: {
-		setMotherBoardName: (mbManufacturerElement: HTMLElement, mbModelElement: HTMLElement) =>
-			setMotherBoardName(mbManufacturerElement, mbModelElement),
-		setMotherBoardBiosVersion: (mbBiosElement: HTMLElement) =>
-			setMotherBoardBiosVersion(mbBiosElement),
+		getMotherboardName: () => getMotherboardName(),
+		getMotherboardBiosVersion: () => getMotherboardBiosVersion(),
 	},
 	ram: {
-		setMemoryLoad: (ramPercentageElement: HTMLElement, ramPercentageBarElement: HTMLElement) =>
-			setMemoryLoad(ramPercentageElement, ramPercentageBarElement),
-		setMemoryBanks: (ramBanksElement: HTMLElement) => setMemoryBanks(ramBanksElement),
+		getMemoryLoad: () => getMemoryLoad(),
+		getTotalMemory: () => getTotalMemory(),
+		getMemoryBanksLayout: () => getMemoryBanksLayout(),
 	},
-	setOsInfo: (osDistroElement: HTMLElement, osArchElement: HTMLElement) =>
-		setOsInfo(osDistroElement, osArchElement),
+	getOsInfo: () => getOsInfo(),
 	minimize: () => ipcRenderer.send(ipcEvents.minimize),
 });

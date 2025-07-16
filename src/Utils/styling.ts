@@ -1,3 +1,10 @@
+export enum StyleColors {
+	GREEN = 'green',
+	YELLOW = 'yellow',
+	ORANGE = 'orange',
+	RED = 'red',
+}
+
 /**
  * Calculates the animation duration based on the percentage.
  * @param percentage Percentage to calculate the animation duration from.
@@ -11,15 +18,15 @@ export const calculateAnimationDurationFromPercentage = (percentage: number) =>
  * @param percentage Percentage to calculate the color from.
  * @returns Css color string.
  */
-export const calculateColorFromPercentage = (percentage: number): string => {
+export const calculateColorFromPercentage = (percentage: number): StyleColors => {
 	if (percentage < 40) {
-		return 'green';
+		return StyleColors.GREEN;
 	} else if (percentage < 75) {
-		return 'yellow';
+		return StyleColors.YELLOW;
 	} else if (percentage < 90) {
-		return 'orange';
+		return StyleColors.ORANGE;
 	} else {
-		return 'red';
+		return StyleColors.RED;
 	}
 };
 
