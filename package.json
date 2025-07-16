@@ -5,7 +5,7 @@
 		"name": "Kobaru",
 		"email": "ikobakitsune@gmail.com"
 	},
-	"version": "0.0.1-alpha",
+	"version": "1.0.0-alpha",
 	"main": "dist/main.js",
 	"type": "commonjs",
 	"scripts": {
