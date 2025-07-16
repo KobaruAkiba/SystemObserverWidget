@@ -1,0 +1,55 @@
+@import url('./css/scrollbar.css');
+@import url('./css/header.css');
+@import url('./css/animations.css');
+@import url('./css/icons.css');
+@import url('./css/gridStyle.css');
+@import url('./css/fillingBarsStyle.css');
+
+:root {
+	--standard-margin: 8px;
+	--icon-responsive-size: clamp(80px, 4vh + 8vw, 120px);
+
+	--window-backgorund-color: #1e1e1eee;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	background: rgba(0, 0, 0, 0.2) !important;
+	-webkit-app-region: no-drag;
+}
+
+.scroll-container::-webkit-scrollbar {
+	width: 4px;
+}
+
+.app {
+	font-family: monospace;
+	color: white;
+	font-size: clamp(14px, 1vw + 1vh, 21px);
+	background: var(--window-backgorund-color);
+	border-radius: 10px;
+	padding: 10px;
+	overflow: hidden;
+}
+
+.content {
+	margin-top: 5vh; /* 5vh (fake header height) */
+	overflow: auto;
+	height: 85vh; /* 100vh - 15vh (fake header height + margin) */
+}
+
+.text-ellipsis {
+	max-width: 100%;
+	display: -webkit-box;
+	line-clamp: 1; /* number of lines you want to show */
+	-webkit-line-clamp: 1; /* number of lines you want to show */
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+

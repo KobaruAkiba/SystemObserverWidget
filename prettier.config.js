@@ -1,0 +1,1 @@
+module.exports = require("@kobaru/eslint-prettier-config/prettier");

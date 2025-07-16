@@ -1,0 +1,15 @@
+.grid-container {
+	display: grid;
+	grid-template-columns: 1fr 10fr 1fr; /* 3 columns: the second is 10 times wider */
+	gap: 16px; /* spacing between items */
+	margin: 8px auto; /* center the grid */
+}
+
+.grid-item {
+	grid-column: span 1; /* spans 1 of the 5 columns */
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-start;
+}
+

@@ -1,0 +1,50 @@
+.background-icon {
+	width: var(--icon-responsive-size);
+	height: var(--icon-responsive-size);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin-right: var(--standard-margin);
+}
+
+.spinning-icon {
+	width: 100%;
+	height: 100%;
+	animation: spin 1s linear infinite;
+}
+
+#cpu-usage-icon {
+	background: url('../images/cpu-container.png') no-repeat center center;
+	background-size: contain;
+}
+
+#cpu-usage-circle {
+	background: url('../images/cpu-fan.png') no-repeat center center;
+	background-size: contain;
+}
+
+#gpu-usage-icon {
+	background: url('../images/gpu-container.png') no-repeat center center;
+	background-size: contain;
+}
+
+#gpu-usage-circle {
+	background: url('../images/gpu-fan.png') no-repeat center center;
+	background-size: contain;
+}
+
+#motherboard-icon {
+	background: url('../images/motherboard-icon.png') no-repeat center center;
+	background-size: contain;
+}
+
+#os-icon {
+	background: url('../images/os-icon.png') no-repeat center center;
+	background-size: contain;
+}
+
+#ram-icon {
+	background: url('../images/ram-icon.png') no-repeat center center;
+	background-size: contain;
+}
+

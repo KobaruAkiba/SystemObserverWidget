@@ -1,0 +1,51 @@
+{
+	"name": "systemobserverwidget",
+	"description": "A system observer widget for Windows",
+	"author": {
+		"name": "Kobaru",
+		"email": "ikobakitsune@gmail.com"
+	},
+	"version": "0.0.1-alpha",
+	"main": "dist/main.js",
+	"type": "commonjs",
+	"scripts": {
+		"start": "electron-forge start",
+		"make": "electron-forge make",
+		"package": "electron-forge package",
+		"build": "bun build src/main.ts src/preload.ts --outdir=dist --target=node --format=cjs --minify",
+		"start-tsc": "bun run build-tsc && electron .",
+		"build-tsc": "bun run build-main && bun run bundle-components && bun run copy-all",
+		"build-main": "tsc -p tsconfig.json",
+		"bundle-components": "bun build src/Components/**/* --outdir dist/Components --target browser --minify --external:electron",
+		"copy-all": "bun run copy-index && bun run copy-static",
+		"copy-index": "cp src/index.html dist/index.html",
+		"copy-static": "cpx \"static/**/*\" dist"
+	},
+	"devDependencies": {
+		"@electron-forge/cli": "^7.8.0",
+		"@electron-forge/maker-squirrel": "^7.8.0",
+		"@electron-forge/maker-zip": "^7.8.0",
+		"@kobaru/eslint-prettier-config": "file:../eslint-prettier-config",
+		"@types/bun": "latest",
+		"@types/node": "^22.15.3",
+		"@typescript-eslint/eslint-plugin": "^8.31.1",
+		"@typescript-eslint/parser": "^8.31.1",
+		"cpx": "^1.5.0",
+		"electron": "^36.0.0",
+		"eslint": "^9.25.1",
+		"eslint-config-prettier": "^10.1.2",
+		"eslint-plugin-prettier": "^5.2.6",
+		"prettier": "^3.5.3"
+	},
+	"peerDependencies": {
+		"typescript": "^5.8.3"
+	},
+	"dependencies": {
+		"lit": "^3.3.0",
+		"systeminformation": "^5.25.11"
+	},
+	"trustedDependencies": [
+		"electron",
+		"unrs-resolver"
+	]
+}

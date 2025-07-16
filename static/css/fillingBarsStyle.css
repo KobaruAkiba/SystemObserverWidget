@@ -1,0 +1,50 @@
+.filling-bar-container {
+	display: flex;
+	width: 100%;
+	overflow: hidden;
+	position: relative;
+}
+
+.filling-bar-wrapper {
+	width: 100%;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+}
+
+.filling-bar {
+	height: 50%;
+	display: flex;
+}
+
+.disabled-bar {
+	width: 100%;
+	background-image: repeating-linear-gradient(135deg, black, transparent 8px);
+}
+
+.filling-bar-usage-number {
+	position: absolute;
+	right: 8px;
+}
+
+.filling-line-trashold {
+	position: absolute;
+	width: 0.1%;
+	height: 50%;
+}
+
+.trashold-40 {
+	left: 40%;
+	background-color: yellow;
+}
+
+.trashold-75 {
+	left: 75%;
+	background-color: orange;
+}
+
+.trashold-90 {
+	left: 90%;
+	background-color: red;
+}
+
