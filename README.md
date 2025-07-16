@@ -1,9 +1,11 @@
 # 🚀 SystemObserverWidget
 
-![GitHub repo](https://img.shields.io/github/repo-size/KobaruAkiba/SystemObserverWidget)
-![Platform](https://img.shields.io/badge/platform-Windows-blue)
 ![Status](https://img.shields.io/badge/status-in%20development-orange)
+![GitHub repo](https://img.shields.io/github/repo-size/KobaruAkiba/SystemObserverWidget)
 [![CodeQL Advanced](https://github.com/KobaruAkiba/SystemObserverWidget/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/KobaruAkiba/SystemObserverWidget/actions/workflows/codeql.yml)
+![License](https://img.shields.io/github/license/your-username/SystemObserverWidget)
+
+![Platform](https://img.shields.io/badge/platform-Windows-blue)
 
 A lightweight, no-nonsense, open-source **Electron widget** for real-time system monitoring — no bloated dashboards, no hidden daemons, just straight-up data.
 
