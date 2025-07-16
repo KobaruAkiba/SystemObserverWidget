@@ -3,7 +3,7 @@
 ![Status](https://img.shields.io/badge/status-in%20development-orange)
 ![GitHub repo](https://img.shields.io/github/repo-size/KobaruAkiba/SystemObserverWidget)
 [![CodeQL Advanced](https://github.com/KobaruAkiba/SystemObserverWidget/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/KobaruAkiba/SystemObserverWidget/actions/workflows/codeql.yml)
-![License](https://img.shields.io/github/license/your-username/SystemObserverWidget)
+![License](https://img.shields.io/github/license/KobaruAkiba/SystemObserverWidget)
 
 ![Platform](https://img.shields.io/badge/platform-Windows-blue)
 
