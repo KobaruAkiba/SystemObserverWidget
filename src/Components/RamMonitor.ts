@@ -58,7 +58,7 @@ export class RamMonitor extends LitElement {
 	}
 
 	render() {
-		return html` <div
+		return html`<div
 			id="ram-container"
 			class="grid-container"
 		>
@@ -86,4 +86,3 @@ export class RamMonitor extends LitElement {
 		</div>`;
 	}
 }
-

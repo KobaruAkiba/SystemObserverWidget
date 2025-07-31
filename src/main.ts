@@ -10,7 +10,7 @@ const createWindow = () => {
 		height: 200,
 		minWidth: 350,
 		minHeight: 200,
-		frame: false, // niente barra finestra = stile widget
+		frame: false, // widget style
 		transparent: true,
 		hasShadow: true,
 		roundedCorners: true,
