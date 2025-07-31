@@ -41,9 +41,6 @@ export class GpuMonitor extends LitElement {
 	}
 
 	protected willUpdate(_changedProperties: PropertyValues): void {
-		console.log('gpu% ', this.gpuPercentageText);
-		console.log('gpu° ', this.gpuTemperatureText);
-
 		if (
 			_changedProperties.has(nameof<GpuMonitor>('gpuLoad')) &&
 			_changedProperties.get(nameof<GpuMonitor>('gpuLoad')) !== this.gpuLoad &&
@@ -133,4 +130,3 @@ export class GpuMonitor extends LitElement {
 		</div>`;
 	}
 }
-

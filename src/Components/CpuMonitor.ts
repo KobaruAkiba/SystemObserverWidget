@@ -38,9 +38,6 @@ export class CpuMonitor extends LitElement {
 	}
 
 	protected willUpdate(_changedProperties: PropertyValues): void {
-		console.log('cpu% ', this.cpuPercentageText);
-		console.log('cpu° ', this.cpuTemperatureText);
-
 		if (
 			_changedProperties.has(nameof<CpuMonitor>('cpuLoad')) &&
 			_changedProperties.get(nameof<CpuMonitor>('cpuLoad')) !== this.cpuLoad &&
