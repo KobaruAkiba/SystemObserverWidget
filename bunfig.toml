@@ -1,3 +1,2 @@
-entrypoints = ["src/main.ts"]
-outdir = "dist"
-target = "node"
+[target]
+format = "node"
