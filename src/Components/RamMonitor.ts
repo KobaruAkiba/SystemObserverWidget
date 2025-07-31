@@ -1,10 +1,11 @@
 import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import './PercentageMonitorBar';
 import { nameof } from '../Utils/types';
 import { calculateColorFromPercentage, StyleColors } from '../Utils/styling';
 import { toBytes } from '../Utils/numbers';
 import { loadingStrings } from '../Utils/notAvailable';
+
+import './PercentageMonitorBar';
 
 @customElement('ram-monitor')
 export class RamMonitor extends LitElement {

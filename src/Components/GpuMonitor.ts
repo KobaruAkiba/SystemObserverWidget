@@ -1,7 +1,5 @@
 import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import './MonitorSpinningIcon';
-import './PercentageMonitorBar';
 import { nameof } from '../Utils/types';
 import { toPercentage } from '../Utils/numbers';
 import {
@@ -10,6 +8,9 @@ import {
 	StyleColors,
 } from '../Utils/styling';
 import { loadingStrings } from '../Utils/notAvailable';
+
+import './MonitorSpinningIcon';
+import './PercentageMonitorBar';
 
 @customElement('gpu-monitor')
 export class GpuMonitor extends LitElement {

@@ -1,6 +1,5 @@
 import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import './MonitorSpinningIcon';
 import {
 	calculateAnimationDurationFromPercentage,
 	calculateColorFromPercentage,
@@ -9,6 +8,8 @@ import {
 import { nameof } from '../Utils/types';
 import { loadingStrings } from '../Utils/notAvailable';
 import { toPercentage } from '../Utils/numbers';
+
+import './MonitorSpinningIcon';
 
 @customElement('cpu-monitor')
 export class CpuMonitor extends LitElement {

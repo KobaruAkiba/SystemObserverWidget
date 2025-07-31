@@ -1,10 +1,12 @@
 import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, state } from 'lit/decorators.js';
+
 import './CpuMonitor';
 import './GpuMonitor';
 import './MotherboardMonitor';
 import './OperativeMonitor';
 import './RamMonitor';
+import './WindowControls';
 
 @customElement('app-component')
 export class App extends LitElement {
@@ -20,11 +22,9 @@ export class App extends LitElement {
 	@state() ramLoad: number = 0;
 	@state() isSettingsPanelOpen: boolean = false;
 
-	private handleSettingPanelClick = () => {
+	private settingPanelClick = () => {
 		this.isSettingsPanelOpen = !this.isSettingsPanelOpen;
 	};
-
-	private handleMinimizeClick = () => window.sow.minimize();
 
 	private updateStates = async () => {
 		// TODO: find a way to optimize not successfull calls (timeout after number of tries?)
@@ -42,54 +42,10 @@ export class App extends LitElement {
 
 	render() {
 		return html`<div class="app">
-			<div class="window-controls">
-				<div class="widget-move-bar"></div>
-				<span class="window-buttons">
-					<button
-						class="window-button"
-						@click=${this.handleMinimizeClick}
-					>
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							class="window-button-icon"
-							viewBox="0 -960 960 960"
-						>
-							<path d="M240-120v-80h480v80H240Z" />
-						</svg>
-					</button>
-					<button
-						id="minimize-button"
-						class="window-button"
-						@click=${this.handleSettingPanelClick}
-					>
-						${this.isSettingsPanelOpen === true
-							? html`<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="window-button-icon"
-									viewBox="0 -960 960 960"
-								>
-									<path
-										d="M300-640v320l160-160-160-160ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm440-80h120v-560H640v560Zm-80 0v-560H200v560h360Zm80 0h120-120Z"
-									/>
-								</svg>`
-							: html`<svg
-									xmlns="http://www.w3.org/2000/svg"
-									class="window-button-icon"
-									viewBox="0 -960 960 960"
-								>
-									<path
-										d="M460-320v-320L300-480l160 160ZM200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h560q33 0 56.5 23.5T840-760v560q0 33-23.5 56.5T760-120H200Zm440-80h120v-560H640v560Zm-80 0v-560H200v560h360Zm80 0h120-120Z"
-									/>
-								</svg> `}
-					</button>
-				</span>
-				${this.isSettingsPanelOpen === true
-					? html` <div class="window-side-bar">
-							<div>Options</div>
-							<div>_ Minimize</div>
-						</div>`
-					: html``}
-			</div>
+			<window-controls
+				?isSettingsPanelOpen=${this.isSettingsPanelOpen}
+				.settingsPanelClick=${this.settingPanelClick}
+			></window-controls>
 			<div class="content ${this.isSettingsPanelOpen ? 'with-other-settings' : ''}">
 				<cpu-monitor
 					cpuLoad=${this.cpuLoad}
