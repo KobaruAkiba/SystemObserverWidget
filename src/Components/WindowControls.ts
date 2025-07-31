@@ -1,5 +1,7 @@
-import { html, LitElement } from 'lit';
+import { css, html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+
+import './InfoTooltip';
 
 @customElement('window-controls')
 export class WindowControls extends LitElement {
@@ -12,6 +14,7 @@ export class WindowControls extends LitElement {
 	@property({ attribute: false }) settingsPanelClick?: () => void;
 
 	private handleMinimizeClick = window.sow.minimize;
+
 	private handleSettingsPanelClick() {
 		this.settingsPanelClick?.();
 	}
@@ -60,8 +63,15 @@ export class WindowControls extends LitElement {
 			</span>
 			${this.isSettingsPanelOpen === true
 				? html` <div class="window-side-bar">
-						<div>Options</div>
-						<div>_ Minimize</div>
+						<div class="side-bar-ticks">
+							<info-tooltip
+								text="Number of seconds between detections"
+								position="bottom"
+							>
+								<div>Ticks</div>
+							</info-tooltip>
+							<div>3 s</div>
+						</div>
 					</div>`
 				: html``}
 		</div>`;
