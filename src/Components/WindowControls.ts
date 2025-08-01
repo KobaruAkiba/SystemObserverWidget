@@ -1,5 +1,6 @@
-import { css, html, LitElement } from 'lit';
+import { html, LitElement } from 'lit';
 import { customElement, property } from 'lit/decorators.js';
+import { componentEvents } from '../Utils/events';
 
 import './InfoTooltip';
 
@@ -12,11 +13,30 @@ export class WindowControls extends LitElement {
 
 	@property({ type: Boolean }) isSettingsPanelOpen: boolean = false;
 	@property({ attribute: false }) settingsPanelClick?: () => void;
+	@property({ type: Number }) updateTicks: Number = 3;
 
 	private handleMinimizeClick = window.sow.minimize;
 
 	private handleSettingsPanelClick() {
 		this.settingsPanelClick?.();
+	}
+
+	private onTicksInput(event: Event) {
+		let newValue = parseInt((event?.target as HTMLInputElement).value, 10);
+
+		if (!Number.isNaN(newValue)) {
+			newValue = Math.min(10, Math.max(1, newValue));
+			this.updateTicks = newValue;
+			this.dispatchEvent(
+				new CustomEvent(componentEvents.ticks_changed, {
+					detail: { value: this.updateTicks },
+					bubbles: true, // allows bubble up to parent
+					composed: true, // allows event crossing shadow dom
+				})
+			);
+		} else {
+			this.updateTicks = 3; // reset to default ticks if failing converting
+		}
 	}
 
 	render() {
@@ -70,7 +90,15 @@ export class WindowControls extends LitElement {
 							>
 								<div>Ticks</div>
 							</info-tooltip>
-							<div>3 s</div>
+							<div>
+								<input
+									type="number"
+									min="1"
+									max="10"
+									.value=${String(this.updateTicks)}
+									@input=${this.onTicksInput}
+								/>
+							</div>
 						</div>
 					</div>`
 				: html``}
