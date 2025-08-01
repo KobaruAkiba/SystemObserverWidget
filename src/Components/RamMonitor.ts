@@ -21,7 +21,7 @@ export class RamMonitor extends LitElement {
 	@state() memoryBanksLayout = loadingStrings.Dots;
 	@state() memoryPercentageText = `${loadingStrings.Dots}%`;
 	@state() memoryPercentageBarWidth = '0%';
-	@state() memoryPercentageBarColor = StyleColors.GREEN;
+	@state() memoryPercentageBarColor = StyleColors.GOOD;
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { ram } = window.sow;
@@ -48,7 +48,7 @@ export class RamMonitor extends LitElement {
 		if (this.memoryLoad < 0) {
 			this.memoryPercentageText = `${loadingStrings.Dots}%`;
 			this.memoryPercentageBarWidth = '0%';
-			this.memoryPercentageBarColor = StyleColors.GREEN;
+			this.memoryPercentageBarColor = StyleColors.GOOD;
 			return;
 		}
 

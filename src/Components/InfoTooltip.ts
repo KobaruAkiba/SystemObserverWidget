@@ -1,4 +1,3 @@
-// my-tooltip.ts
 import { LitElement, html, css } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
 
@@ -21,7 +20,6 @@ export class InfoTooltip extends LitElement {
 			padding: 4px 8px;
 			border-radius: 4px;
 			font-size: 0.75rem;
-			white-space: nowrap;
 			opacity: 0;
 			transform: scale(0.95);
 			transition:

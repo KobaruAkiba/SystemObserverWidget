@@ -25,12 +25,12 @@ export class CpuMonitor extends LitElement {
 	@state() cpuPercentageText = `${loadingStrings.Dots}%`;
 	@state() cpuFanSpinningDuration = '1s';
 	@state() cpuPercentageBarWidth = '0%';
-	@state() cpuPercentageBarColor = StyleColors.GREEN;
+	@state() cpuPercentageBarColor = StyleColors.GOOD;
 
 	@state() cpuTemperatureText = `${loadingStrings.Dots}°C`;
 	@state() cpuMaxTemperature = 0;
 	@state() cpuTemperatureBarWidth = '0%';
-	@state() cpuTemperatureBarColor = StyleColors.GREEN;
+	@state() cpuTemperatureBarColor = StyleColors.GOOD;
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { cpu } = window.sow;
@@ -61,7 +61,7 @@ export class CpuMonitor extends LitElement {
 			this.cpuPercentageText = `${loadingStrings.NotAvailable}%`;
 			this.cpuFanSpinningDuration = '1s';
 			this.cpuPercentageBarWidth = '0%';
-			this.cpuPercentageBarColor = StyleColors.GREEN;
+			this.cpuPercentageBarColor = StyleColors.GOOD;
 			return;
 		}
 
@@ -75,7 +75,7 @@ export class CpuMonitor extends LitElement {
 		if (this.cpuTemperature < 0 || this.cpuMaxTemperature < 0) {
 			this.cpuTemperatureText = `${loadingStrings.NotAvailable}%`;
 			this.cpuTemperatureBarWidth = '0%';
-			this.cpuTemperatureBarColor = StyleColors.GREEN;
+			this.cpuTemperatureBarColor = StyleColors.GOOD;
 			return;
 		}
 

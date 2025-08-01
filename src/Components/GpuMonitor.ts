@@ -29,11 +29,11 @@ export class GpuMonitor extends LitElement {
 	@state() gpuPercentageText = `${loadingStrings.Dots}%`;
 	@state() gpuFanSpinningDuration = '1s';
 	@state() gpuPercentageBarWidth = '0%';
-	@state() gpuPercentageBarColor = StyleColors.GREEN;
+	@state() gpuPercentageBarColor = StyleColors.GOOD;
 
 	@state() gpuTemperatureText = `${loadingStrings.Dots}°C`;
 	@state() gpuTemperatureBarWidth = '0%';
-	@state() gpuTemperatureBarColor = StyleColors.GREEN;
+	@state() gpuTemperatureBarColor = StyleColors.GOOD;
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { gpu } = window.sow;
@@ -64,7 +64,7 @@ export class GpuMonitor extends LitElement {
 			this.gpuPercentageText = `${loadingStrings.NotAvailable}%`;
 			this.gpuPercentageBarWidth = '0%';
 			this.gpuFanSpinningDuration = '1s';
-			this.gpuPercentageBarColor = StyleColors.GREEN;
+			this.gpuPercentageBarColor = StyleColors.GOOD;
 			return;
 		}
 
@@ -79,7 +79,7 @@ export class GpuMonitor extends LitElement {
 		if (this.gpuTemperature < 0) {
 			this.gpuTemperatureText = `${loadingStrings.NotAvailable}°C`;
 			this.gpuTemperatureBarWidth = '0%';
-			this.gpuTemperatureBarColor = StyleColors.GREEN;
+			this.gpuTemperatureBarColor = StyleColors.GOOD;
 			return;
 		}
 
