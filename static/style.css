@@ -4,12 +4,13 @@
 @import url('./css/icons.css');
 @import url('./css/gridStyle.css');
 @import url('./css/fillingBarsStyle.css');
+@import url('./css/micro-components.css');
 
 :root {
 	--standard-margin: 8px;
 	--font-size: clamp(14px, 1vw + 1vh, 21px);
 	--icon-responsive-size: clamp(80px, 4vh + 8vw, 120px);
-	--window-icon-responsive-size: clamp(18px, 2vh + 2vw, 24px);
+	--window-icon-responsive-size: clamp(18px, 2vh + 1vw, 24px);
 
 	--window-backgorund-color: #1e1e1eee;
 	--back-window-background-color: rgba(0, 0, 0, 0.2);
@@ -60,4 +61,22 @@ body {
 	-webkit-box-orient: vertical;
 	overflow: hidden;
 	text-overflow: ellipsis;
+}
+
+.content-wrapper {
+	display: flex;
+	flex-direction: row;
+	height: 100%;
+}
+
+.vertical-separator {
+	width: 1px;
+	height: 77vh;
+	background: var(--move-bar-background-color);
+	border-radius: 2px;
+	margin: 8vh 0.5rem;
+}
+
+.margin-b-16 {
+	margin-bottom: 16px;
 }

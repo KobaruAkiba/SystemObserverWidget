@@ -58,4 +58,9 @@
 	right: 0px;
 	align-items: stretch;
 	width: 25%;
+	align-items: center;
+}
+
+.side-sub-setting {
+	width: 18vw;
 }

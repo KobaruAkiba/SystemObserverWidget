@@ -69,25 +69,28 @@ export class App extends LitElement {
 
 	render() {
 		return html`<div class="app">
-			<window-controls
-				?isSettingsPanelOpen=${this.isSettingsPanelOpen}
-				.settingsPanelClick=${this.settingPanelClick}
-				updateTicks=${this.updateTicks}
-				@ticks-changed=${this.onTicksChanged}
-			></window-controls>
-			<div class="content ${this.isSettingsPanelOpen ? 'with-other-settings' : ''}">
-				<cpu-monitor
-					cpuLoad=${this.cpuLoad}
-					cpuTemperature=${this.cpuTemperature}
-				></cpu-monitor>
-				<gpu-monitor
-					gpuLoad=${this.gpuLoad}
-					gpuTemperature=${this.gpuTemperature}
-				>
-				</gpu-monitor>
-				<ram-monitor memoryLoad=${this.ramLoad}></ram-monitor>
-				<motherboard-monitor></motherboard-monitor>
-				<operative-monitor></operative-monitor>
+			<div class="content-wrapper">
+				<window-controls
+					?isSettingsPanelOpen=${this.isSettingsPanelOpen}
+					.settingsPanelClick=${this.settingPanelClick}
+					updateTicks=${this.updateTicks}
+					@ticks-changed=${this.onTicksChanged}
+				></window-controls>
+				<div class="content ${this.isSettingsPanelOpen ? 'with-other-settings' : ''}">
+					<cpu-monitor
+						cpuLoad=${this.cpuLoad}
+						cpuTemperature=${this.cpuTemperature}
+					></cpu-monitor>
+					<gpu-monitor
+						gpuLoad=${this.gpuLoad}
+						gpuTemperature=${this.gpuTemperature}
+					>
+					</gpu-monitor>
+					<ram-monitor memoryLoad=${this.ramLoad}></ram-monitor>
+					<motherboard-monitor></motherboard-monitor>
+					<operative-monitor></operative-monitor>
+				</div>
+				<div class="${this.isSettingsPanelOpen ? 'vertical-separator' : ''}"></div>
 			</div>
 		</div>`;
 	}

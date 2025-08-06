@@ -83,15 +83,17 @@ export class WindowControls extends LitElement {
 			</span>
 			${this.isSettingsPanelOpen === true
 				? html` <div class="window-side-bar">
-						<div class="side-bar-ticks">
+						<div class="margin-b-16">Settings</div>
+						<div class="side-bar-ticks side-sub-setting">
 							<info-tooltip
 								text="Number of seconds between detections"
 								position="bottom"
 							>
-								<div>Ticks</div>
+								<div>🕑 Ticks</div>
 							</info-tooltip>
 							<div>
 								<input
+									class="techy-input"
 									type="number"
 									min="1"
 									max="10"
