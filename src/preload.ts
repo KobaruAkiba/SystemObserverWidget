@@ -40,4 +40,5 @@ contextBridge.exposeInMainWorld('sow', {
 	},
 	getOsInfo: () => getOsInfo(),
 	minimize: () => ipcRenderer.send(ipcEvents.minimize),
+	close: () => ipcRenderer.send(ipcEvents.close),
 });

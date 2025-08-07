@@ -1,6 +1,5 @@
 import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import './MonitorSpinningIcon';
 import {
 	calculateAnimationDurationFromPercentage,
 	calculateColorFromPercentage,
@@ -9,6 +8,8 @@ import {
 import { nameof } from '../Utils/types';
 import { loadingStrings } from '../Utils/notAvailable';
 import { toPercentage } from '../Utils/numbers';
+
+import './MonitorSpinningIcon';
 
 @customElement('cpu-monitor')
 export class CpuMonitor extends LitElement {
@@ -24,12 +25,12 @@ export class CpuMonitor extends LitElement {
 	@state() cpuPercentageText = `${loadingStrings.Dots}%`;
 	@state() cpuFanSpinningDuration = '1s';
 	@state() cpuPercentageBarWidth = '0%';
-	@state() cpuPercentageBarColor = StyleColors.GREEN;
+	@state() cpuPercentageBarColor = StyleColors.GOOD;
 
 	@state() cpuTemperatureText = `${loadingStrings.Dots}°C`;
 	@state() cpuMaxTemperature = 0;
 	@state() cpuTemperatureBarWidth = '0%';
-	@state() cpuTemperatureBarColor = StyleColors.GREEN;
+	@state() cpuTemperatureBarColor = StyleColors.GOOD;
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { cpu } = window.sow;
@@ -38,9 +39,6 @@ export class CpuMonitor extends LitElement {
 	}
 
 	protected willUpdate(_changedProperties: PropertyValues): void {
-		console.log('cpu% ', this.cpuPercentageText);
-		console.log('cpu° ', this.cpuTemperatureText);
-
 		if (
 			_changedProperties.has(nameof<CpuMonitor>('cpuLoad')) &&
 			_changedProperties.get(nameof<CpuMonitor>('cpuLoad')) !== this.cpuLoad &&
@@ -63,7 +61,7 @@ export class CpuMonitor extends LitElement {
 			this.cpuPercentageText = `${loadingStrings.NotAvailable}%`;
 			this.cpuFanSpinningDuration = '1s';
 			this.cpuPercentageBarWidth = '0%';
-			this.cpuPercentageBarColor = StyleColors.GREEN;
+			this.cpuPercentageBarColor = StyleColors.GOOD;
 			return;
 		}
 
@@ -77,7 +75,7 @@ export class CpuMonitor extends LitElement {
 		if (this.cpuTemperature < 0 || this.cpuMaxTemperature < 0) {
 			this.cpuTemperatureText = `${loadingStrings.NotAvailable}%`;
 			this.cpuTemperatureBarWidth = '0%';
-			this.cpuTemperatureBarColor = StyleColors.GREEN;
+			this.cpuTemperatureBarColor = StyleColors.GOOD;
 			return;
 		}
 

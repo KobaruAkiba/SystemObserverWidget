@@ -24,6 +24,7 @@ declare global {
 			};
 			getOsInfo: () => Promise<{ distro: string; arch: string }>;
 			minimize: () => void;
+			close: () => void;
 		};
 	}
 }

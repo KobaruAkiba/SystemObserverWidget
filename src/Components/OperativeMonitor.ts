@@ -46,4 +46,3 @@ export class OperativeMonitor extends LitElement {
 		</div>`;
 	}
 }
-

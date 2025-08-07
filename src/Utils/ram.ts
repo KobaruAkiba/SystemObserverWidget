@@ -7,6 +7,11 @@ export enum MemoryTypes {
 	DDR5,
 }
 
+/**
+ * Tries to convert strings to MemoryType
+ * @param val Memory type string
+ * @returns Memory type
+ */
 export const toMemoryType = (val: MemoryValueTypes): MemoryTypes => {
 	switch (val) {
 		case 'DDR3':
@@ -20,6 +25,11 @@ export const toMemoryType = (val: MemoryValueTypes): MemoryTypes => {
 	}
 };
 
+/**
+ * Tries to convert MemoryType to string
+ * @param val Memory type
+ * @returns Memory type string
+ */
 export const fromMemoryType = (type: MemoryTypes): MemoryValueTypes => {
 	switch (type) {
 		case MemoryTypes.DDR3:
@@ -32,4 +42,3 @@ export const fromMemoryType = (type: MemoryTypes): MemoryValueTypes => {
 			return 'N/A';
 	}
 };
-

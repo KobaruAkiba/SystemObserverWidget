@@ -1,8 +1,8 @@
 export enum StyleColors {
-	GREEN = 'green',
-	YELLOW = 'yellow',
-	ORANGE = 'orange',
-	RED = 'red',
+	GOOD = 'green',
+	OK = 'yellow',
+	NOT_OK = 'orange',
+	BAD = 'red',
 }
 
 /**
@@ -20,13 +20,12 @@ export const calculateAnimationDurationFromPercentage = (percentage: number) =>
  */
 export const calculateColorFromPercentage = (percentage: number): StyleColors => {
 	if (percentage < 40) {
-		return StyleColors.GREEN;
+		return StyleColors.GOOD;
 	} else if (percentage < 75) {
-		return StyleColors.YELLOW;
+		return StyleColors.OK;
 	} else if (percentage < 90) {
-		return StyleColors.ORANGE;
+		return StyleColors.NOT_OK;
 	} else {
-		return StyleColors.RED;
+		return StyleColors.BAD;
 	}
 };
-

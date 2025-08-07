@@ -1,0 +1,4 @@
+{
+	"lit-plugin.exclude": ["**/node_modules/**"],
+	"typescript.tsserver.exclude": ["**/node_modules/**"]
+}

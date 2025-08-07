@@ -1,10 +1,11 @@
 import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import './PercentageMonitorBar';
 import { nameof } from '../Utils/types';
 import { calculateColorFromPercentage, StyleColors } from '../Utils/styling';
 import { toBytes } from '../Utils/numbers';
 import { loadingStrings } from '../Utils/notAvailable';
+
+import './PercentageMonitorBar';
 
 @customElement('ram-monitor')
 export class RamMonitor extends LitElement {
@@ -20,7 +21,7 @@ export class RamMonitor extends LitElement {
 	@state() memoryBanksLayout = loadingStrings.Dots;
 	@state() memoryPercentageText = `${loadingStrings.Dots}%`;
 	@state() memoryPercentageBarWidth = '0%';
-	@state() memoryPercentageBarColor = StyleColors.GREEN;
+	@state() memoryPercentageBarColor = StyleColors.GOOD;
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { ram } = window.sow;
@@ -47,7 +48,7 @@ export class RamMonitor extends LitElement {
 		if (this.memoryLoad < 0) {
 			this.memoryPercentageText = `${loadingStrings.Dots}%`;
 			this.memoryPercentageBarWidth = '0%';
-			this.memoryPercentageBarColor = StyleColors.GREEN;
+			this.memoryPercentageBarColor = StyleColors.GOOD;
 			return;
 		}
 
@@ -58,7 +59,7 @@ export class RamMonitor extends LitElement {
 	}
 
 	render() {
-		return html` <div
+		return html`<div
 			id="ram-container"
 			class="grid-container"
 		>
@@ -86,4 +87,3 @@ export class RamMonitor extends LitElement {
 		</div>`;
 	}
 }
-

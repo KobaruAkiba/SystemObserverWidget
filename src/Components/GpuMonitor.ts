@@ -1,7 +1,5 @@
 import { html, LitElement, PropertyValues } from 'lit';
 import { customElement, property, state } from 'lit/decorators.js';
-import './MonitorSpinningIcon';
-import './PercentageMonitorBar';
 import { nameof } from '../Utils/types';
 import { toPercentage } from '../Utils/numbers';
 import {
@@ -10,6 +8,9 @@ import {
 	StyleColors,
 } from '../Utils/styling';
 import { loadingStrings } from '../Utils/notAvailable';
+
+import './MonitorSpinningIcon';
+import './PercentageMonitorBar';
 
 @customElement('gpu-monitor')
 export class GpuMonitor extends LitElement {
@@ -28,11 +29,11 @@ export class GpuMonitor extends LitElement {
 	@state() gpuPercentageText = `${loadingStrings.Dots}%`;
 	@state() gpuFanSpinningDuration = '1s';
 	@state() gpuPercentageBarWidth = '0%';
-	@state() gpuPercentageBarColor = StyleColors.GREEN;
+	@state() gpuPercentageBarColor = StyleColors.GOOD;
 
 	@state() gpuTemperatureText = `${loadingStrings.Dots}°C`;
 	@state() gpuTemperatureBarWidth = '0%';
-	@state() gpuTemperatureBarColor = StyleColors.GREEN;
+	@state() gpuTemperatureBarColor = StyleColors.GOOD;
 
 	protected async firstUpdated(_changedProperties: PropertyValues): Promise<void> {
 		const { gpu } = window.sow;
@@ -41,9 +42,6 @@ export class GpuMonitor extends LitElement {
 	}
 
 	protected willUpdate(_changedProperties: PropertyValues): void {
-		console.log('gpu% ', this.gpuPercentageText);
-		console.log('gpu° ', this.gpuTemperatureText);
-
 		if (
 			_changedProperties.has(nameof<GpuMonitor>('gpuLoad')) &&
 			_changedProperties.get(nameof<GpuMonitor>('gpuLoad')) !== this.gpuLoad &&
@@ -66,7 +64,7 @@ export class GpuMonitor extends LitElement {
 			this.gpuPercentageText = `${loadingStrings.NotAvailable}%`;
 			this.gpuPercentageBarWidth = '0%';
 			this.gpuFanSpinningDuration = '1s';
-			this.gpuPercentageBarColor = StyleColors.GREEN;
+			this.gpuPercentageBarColor = StyleColors.GOOD;
 			return;
 		}
 
@@ -81,7 +79,7 @@ export class GpuMonitor extends LitElement {
 		if (this.gpuTemperature < 0) {
 			this.gpuTemperatureText = `${loadingStrings.NotAvailable}°C`;
 			this.gpuTemperatureBarWidth = '0%';
-			this.gpuTemperatureBarColor = StyleColors.GREEN;
+			this.gpuTemperatureBarColor = StyleColors.GOOD;
 			return;
 		}
 
@@ -133,4 +131,3 @@ export class GpuMonitor extends LitElement {
 		</div>`;
 	}
 }
-
