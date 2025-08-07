@@ -3,6 +3,7 @@
  */
 export const ipcEvents = {
 	minimize: 'minimize',
+	close: 'close',
 };
 
 /**
