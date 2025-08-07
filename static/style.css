@@ -80,3 +80,7 @@ body {
 .margin-b-16 {
 	margin-bottom: 16px;
 }
+
+.full-80-width {
+	width: 80%;
+}

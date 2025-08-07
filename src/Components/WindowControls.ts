@@ -21,6 +21,8 @@ export class WindowControls extends LitElement {
 		this.settingsPanelClick?.();
 	}
 
+	private handleCloseClick = window.sow.close;
+
 	private onTicksInput(event: Event) {
 		let newValue = parseInt((event?.target as HTMLInputElement).value, 10);
 
@@ -84,7 +86,7 @@ export class WindowControls extends LitElement {
 			${this.isSettingsPanelOpen === true
 				? html` <div class="window-side-bar">
 						<div class="margin-b-16">Settings</div>
-						<div class="side-bar-ticks side-sub-setting">
+						<div class="side-bar-ticks side-sub-setting margin-b-16">
 							<info-tooltip
 								text="Number of seconds between detections"
 								position="bottom"
@@ -101,6 +103,14 @@ export class WindowControls extends LitElement {
 									@input=${this.onTicksInput}
 								/>
 							</div>
+						</div>
+						<div class="full-80-width">
+							<button
+								class="close-button"
+								@click=${this.handleCloseClick}
+							>
+								❌ Close
+							</button>
 						</div>
 					</div>`
 				: html``}
