@@ -4,6 +4,8 @@
 export const ipcEvents = {
 	minimize: 'minimize',
 	close: 'close',
+	loadUserSettings: 'load-settings',
+	saveUserSettings: 'save-settings',
 };
 
 /**
