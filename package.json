@@ -12,14 +12,16 @@
 		"forge-start": "electron-forge start",
 		"forge-make": "electron-forge make",
 		"forge-pack": "electron-forge package",
-		"start": "bun run build && electron .",
+		"start": "nodemon",
+		"rebuild": "bun run clean && bun run build",
 		"build": "bun run build-main && bun run build-renderer",
 		"build-main": "tsc -p tsconfig.main.json",
 		"build-renderer": "bun run build-components && bun run copy-index && bun run copy-static",
 		"build-components": "cd src/Components && bun build ./**/*.ts --outdir ../../dist/Components --target browser --minify --external:electron",
 		"copy-index": "cp src/index.html dist/index.html",
 		"copy-static": "cpx \"static/**/*\" dist",
-		"check": "tsc -p tsconfig.json"
+		"check": "tsc -p tsconfig.json",
+		"clean": "rm -rf dist"
 	},
 	"devDependencies": {
 		"@electron-forge/cli": "^7.8.0",
@@ -35,6 +37,7 @@
 		"eslint": "^9.25.1",
 		"eslint-config-prettier": "^10.1.2",
 		"eslint-plugin-prettier": "^5.2.6",
+		"nodemon": "^3.1.10",
 		"prettier": "^3.5.3"
 	},
 	"peerDependencies": {
@@ -49,3 +52,4 @@
 		"unrs-resolver"
 	]
 }
+
