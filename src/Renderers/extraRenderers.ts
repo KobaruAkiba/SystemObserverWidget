@@ -20,4 +20,3 @@ export const getOsInfo = async () =>
 				arch: loadingStrings.NotAvailable,
 			};
 		});
-

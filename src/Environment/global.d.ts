@@ -1,3 +1,5 @@
+import { UserSettingsData } from '../System/settings';
+
 declare global {
 	interface Window {
 		sow: {
@@ -25,6 +27,8 @@ declare global {
 			getOsInfo: () => Promise<{ distro: string; arch: string }>;
 			minimize: () => void;
 			close: () => void;
+			loadUserSettings: () => UserSettingsData;
+			saveUserSettings: (newSettings: UserSettingsData) => void;
 		};
 	}
 }

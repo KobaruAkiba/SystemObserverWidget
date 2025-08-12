@@ -15,6 +15,7 @@ import {
 import { getOsInfo } from './Renderers/extraRenderers.js';
 import { getMotherboardBiosVersion, getMotherboardName } from './Renderers/motherboardRenderer.js';
 import { getMemoryBanksLayout, getMemoryLoad, getTotalMemory } from './Renderers/ramRenderer.js';
+import { UserSettingsData } from './System/settings.js';
 
 contextBridge.exposeInMainWorld('sow', {
 	cpu: {
@@ -41,4 +42,7 @@ contextBridge.exposeInMainWorld('sow', {
 	getOsInfo: () => getOsInfo(),
 	minimize: () => ipcRenderer.send(ipcEvents.minimize),
 	close: () => ipcRenderer.send(ipcEvents.close),
+	loadUserSettings: () => ipcRenderer.invoke(ipcEvents.loadUserSettings),
+	saveUserSettings: (newSettings: UserSettingsData) =>
+		ipcRenderer.invoke(ipcEvents.saveUserSettings, newSettings),
 });
