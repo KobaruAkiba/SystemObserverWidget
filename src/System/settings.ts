@@ -39,7 +39,6 @@ const readSettingsFromDisk = (): UserSettingsData => {
 };
 
 const saveSettings = (data: UserSettingsData) => {
-	console.log('Saving settings', data);
 	userSettingsCache = { ...userSettingsCache, ...data };
 	fs.writeFile(settingsPath, JSON.stringify(data, null, 2), (err) => {
 		if (err) console.error('Failed to save settings: ', err);
@@ -51,4 +50,3 @@ const loadSettings = (): UserSettingsData => userSettingsCache;
 let userSettingsCache: UserSettingsData = readSettingsFromDisk();
 
 export { UserSettingsData, loadSettings, saveSettings };
-
