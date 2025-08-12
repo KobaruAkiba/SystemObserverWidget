@@ -1,0 +1,7 @@
+{
+	"watch": ["src"],
+	"ext": "js,ts,html",
+	"exec": "bun run rebuild && electron .",
+	"delay": "200"
+}
+
