@@ -1,7 +1,7 @@
 import { html, LitElement, PropertyValues } from 'lit';
-import { customElement, property, state } from 'lit/decorators.js';
+import { customElement, state } from 'lit/decorators.js';
 import { nameof } from '../Utils/types';
-import { ComponentEvent, componentEvents } from '../Utils/events';
+import { ComponentEvent } from '../Utils/events';
 
 import './CpuMonitor';
 import './GpuMonitor';
@@ -16,6 +16,8 @@ export class App extends LitElement {
 	createRenderRoot() {
 		return this;
 	}
+
+	private userSettings: any;
 
 	// Renderers states
 	@state() cpuLoad: number = 0;
@@ -51,12 +53,18 @@ export class App extends LitElement {
 		this.renderIntervalId = setInterval(() => this.updateStates(), this.updateTicks * 1000);
 	}
 
-	protected firstUpdated(_changedProperties: PropertyValues): void {
+	protected async firstUpdated(): Promise<void> {
+		this.updateStates();
+		this.userSettings = await window.sow.loadUserSettings();
+		this.updateTicks = this.userSettings.refreshTicks;
 		this.updateInterval();
 	}
 
-	protected willUpdate(_changedProperties: PropertyValues): void {
+	protected updated(_changedProperties: PropertyValues): void {
 		if (_changedProperties.has(nameof<App>('updateTicks'))) {
+			// save new ticks settings
+			window.sow.saveUserSettings({ ...this.userSettings, refreshTicks: this.updateTicks });
+
 			// if update ticks is updated, clear previous interval and restart with new delay
 			if (!!this.renderIntervalId) {
 				clearInterval(this.renderIntervalId);
